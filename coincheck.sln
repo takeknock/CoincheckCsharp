@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coincheck", "coincheck\Coincheck.csproj", "{720DC6B3-41D3-4166-BE61-95DBE6F61288}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unittest", "unittest\Unittest.csproj", "{190FA9C2-EA17-4D63-91C3-EEA6888C6C71}"
+	ProjectSection(ProjectDependencies) = postProject
+		{720DC6B3-41D3-4166-BE61-95DBE6F61288} = {720DC6B3-41D3-4166-BE61-95DBE6F61288}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
