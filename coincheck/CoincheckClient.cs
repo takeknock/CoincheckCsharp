@@ -30,5 +30,17 @@ namespace Coincheck
 
             return response;
         }       
+
+        public String getTrades()
+        {
+            String tradesTarget = target + "/api/trades";
+            String response;
+            using (WebClient client = new WebClient())
+            {
+                response = client.DownloadString(tradesTarget);
+            }
+
+            return response;
+        }
     }
 }
