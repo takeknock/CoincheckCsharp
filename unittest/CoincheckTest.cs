@@ -11,12 +11,21 @@ namespace unittest
     [TestFixture]
     class CoincheckTest
     {
+        private CoincheckClient client = new CoincheckClient();
         [Test]
         public void testGetTicker()
         {
-            var client = new CoincheckClient();
             String ticker = client.getTicker();
-            Assert.AreNotEqual(ticker, null);
+            Assert.AreNotEqual(ticker, "");
+            
+        }
+
+        [Test]
+        public void testGetTrade()
+        {
+            String trades = client.getTrades();
+            Console.WriteLine(trades);
+            Assert.AreNotEqual(trades, "");
         }
 
     }
