@@ -46,14 +46,9 @@ namespace Coincheck
                 result.Add(t2[0], value);
             }
 
-            ticker._ask = result["ask"];
-            ticker._bid = result["bid"];
-            ticker._high = result["high"];
-            ticker._low = result["low"];
-            ticker._volume = result["volume"];
-            ticker._timestamp = Convert.ToInt32(result["timestamp"]);
+            TickerFactory factory = new TickerFactory();
 
-            return new Ticker(ticker);
+            return factory.createTicker(result);
         }       
     }
 }
