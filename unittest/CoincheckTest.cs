@@ -15,9 +15,8 @@ namespace unittest
         public void testGetTicker()
         {
             var client = new CoincheckClient();
-            Ticker ticker = client.getTicker();
+            String ticker = client.getTicker();
             Assert.AreNotEqual(ticker, null);
-            ticker.serialize();
         }
 
     }
