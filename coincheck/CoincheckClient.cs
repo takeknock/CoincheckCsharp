@@ -43,6 +43,17 @@ namespace Coincheck
             return response;
         }
 
-        public string 
+        public string getOrderbooks()
+        {
+
+            string orderbookTarget = target + "/api/order_books";
+            string response;
+            using (WebClient client = new WebClient())
+            {
+                response = client.DownloadString(orderbookTarget);
+            }
+
+            return response;
+        }
     }
 }

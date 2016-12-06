@@ -24,8 +24,16 @@ namespace unittest
         public void testGetTrade()
         {
             string trades = client.getTrades();
-            Console.WriteLine(trades);
+            //Console.WriteLine(trades);
             Assert.AreNotEqual(trades, "");
+        }
+
+        [Test]
+        public void testGetOrderbooks()
+        {
+            string orderBook = client.getOrderbooks();
+            Console.WriteLine(orderBook);
+            Assert.AreNotEqual(orderBook, "");
         }
 
     }
