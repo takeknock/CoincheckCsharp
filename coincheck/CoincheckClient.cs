@@ -12,17 +12,17 @@ namespace Coincheck
 { 
     public class CoincheckClient
     {
-        private String target;
+        private string target;
 
         public CoincheckClient()
         {
             target = "https://coincheck.com";
         }
 
-        public String getTicker()
+        public string getTicker()
         {
-            String tickerTarget = target + "/api/ticker";
-            String response;
+            string tickerTarget = target + "/api/ticker";
+            string response;
             using (WebClient client = new WebClient())
             {
                 response = client.DownloadString(tickerTarget);
@@ -31,10 +31,10 @@ namespace Coincheck
             return response;
         }       
 
-        public String getTrades()
+        public string getTrades()
         {
-            String tradesTarget = target + "/api/trades";
-            String response;
+            string tradesTarget = target + "/api/trades";
+            string response;
             using (WebClient client = new WebClient())
             {
                 response = client.DownloadString(tradesTarget);
@@ -42,5 +42,7 @@ namespace Coincheck
 
             return response;
         }
+
+        public string 
     }
 }

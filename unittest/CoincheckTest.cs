@@ -15,7 +15,7 @@ namespace unittest
         [Test]
         public void testGetTicker()
         {
-            String ticker = client.getTicker();
+            string ticker = client.getTicker();
             Assert.AreNotEqual(ticker, "");
             
         }
@@ -23,7 +23,7 @@ namespace unittest
         [Test]
         public void testGetTrade()
         {
-            String trades = client.getTrades();
+            string trades = client.getTrades();
             Console.WriteLine(trades);
             Assert.AreNotEqual(trades, "");
         }
