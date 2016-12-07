@@ -32,8 +32,19 @@ namespace unittest
         public void testGetOrderbooks()
         {
             string orderBook = client.getOrderbooks();
-            Console.WriteLine(orderBook);
+            //Console.WriteLine(orderBook);
             Assert.AreNotEqual(orderBook, "");
+        }
+
+        [Test]
+        public void testGetExchangeRate()
+        {
+            //string order = "buy";
+            //string pair = "btc_jpy";
+            //double amount = 10;
+            //double price = 85000;
+            //string response = client.getExchangeRate(order, pair, amount, price);
+            //Console.WriteLine(response);
         }
 
     }
