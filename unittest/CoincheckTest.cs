@@ -46,6 +46,18 @@ namespace unittest
             //string response = client.getExchangeRate(order, pair, amount, price);
             //Console.WriteLine(response);
         }
+        [Test]
+        public void testGetFxRate()
+        {
+            string correctPair = "btc_jpy";
+            string notSupportedPair = "ttt_ttt";
+            string fxRate = client.getFxRate(correctPair);
+            Assert.AreNotEqual(fxRate, "");
+
+            Assert.That(() =>
+                client.getFxRate(notSupportedPair), Throws.Exception.TypeOf<NotSupportedException>());
+           
+        }
 
     }
 }
