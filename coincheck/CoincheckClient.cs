@@ -16,9 +16,18 @@ namespace Coincheck
         private string _target;
         private List<string> _gettablePair = new List<string>() { "btc_jpy", "eth_jpy", "etc_jpy", "dao_jpy", "lsk_jpy", "fct_jpy", "xmr_jpy", "rep_jpy", "xrp_jpy", "zec_jpy", "eth_btc", "etc_btc", "lsk_btc", "fct_btc", "xmr_btc", "rep_btc", "xrp_btc", "zec_btc" };
 
+        private string _key;
+        private string _secret;
+
         public CoincheckClient()
         {
             _target = "https://coincheck.com/";
+        }
+
+        public CoincheckClient(string key, string secret)
+        {
+            _key = key;
+            _secret = secret;
         }
 
         public string getTicker()
@@ -102,5 +111,7 @@ namespace Coincheck
             return response;
 
         }
+
+
     }
 }
