@@ -8,12 +8,16 @@ using System.IO;
 using System.Runtime.Serialization.Json;
 using System.Web;
 using System.Collections.Specialized;
+using System.Net.Http;
+using System.Security.Cryptography;
+
 
 namespace Coincheck
 { 
     public class CoincheckClient
     {
-        private string _target;
+        private readonly string _target;
+
         private List<string> _gettablePair = new List<string>() { "btc_jpy", "eth_jpy", "etc_jpy", "dao_jpy", "lsk_jpy", "fct_jpy", "xmr_jpy", "rep_jpy", "xrp_jpy", "zec_jpy", "eth_btc", "etc_btc", "lsk_btc", "fct_btc", "xmr_btc", "rep_btc", "xrp_btc", "zec_btc" };
 
         private string _key;
