@@ -9,6 +9,7 @@ using System.Runtime.Serialization.Json;
 using System.Web;
 using System.Collections.Specialized;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Security.Cryptography;
 
 
@@ -113,9 +114,70 @@ namespace Coincheck
             }
 
             return response;
-
         }
 
 
+        public string createOrder(string orderType, double rate, double amount, string marketBuyAmount, string positionId, string pair)
+        {
+            string createOrderTarget = _target + "api/exchange/orders";
+            Dictionary<string, string> headers = getHeaders(createOrderTarget);
+            var response = new HttpResponseMessage();
+
+            HttpRequestMessage request = new HttpRequestMessage();
+            foreach(var i in headers)
+            {
+                request.Headers.Add(i.Key, i.Value);
+            }
+            request.Method = HttpMethod.Get;
+            var result = getResponse(request);
+            return result.Result;
+        }
+
+        #region private functions
+        private async Task<string> getResponse(HttpRequestMessage request)
+        {
+            var client = new HttpClient();
+            //var response = new HttpResponseMessage();
+
+            var response = await client.SendAsync(request);
+            string result = await response.Content.ReadAsStringAsync();
+            return result;
+        }
+
+
+        private Dictionary<string, string> getHeaders(string uri, string body="")
+        {
+            UnixTime now = new UnixTime(DateTime.Now);
+            string nonce = now._value.ToString();
+            string message = nonce + uri + body;
+
+            var keyByte = Encoding.UTF8.GetBytes(_secret);
+            string signature = "";
+            using (var hmacsha256 = new HMACSHA256(keyByte))
+            {
+                hmacsha256.ComputeHash(Encoding.UTF8.GetBytes(message));
+                signature = convertByteToString(hmacsha256.Hash);
+            }
+
+            Dictionary<string, string> result = new Dictionary<string, string>();
+            result.Add("Content-Type", "application/json");
+            result.Add("ACCESS-KEY", _key);
+            result.Add("ACCESS-NONCE", nonce);
+            result.Add("ACCESS-SIGNATURE", signature);
+
+            return new Dictionary<string, string>(result);
+        }
+
+        private string convertByteToString(byte[] buffer)
+        {
+            string stringBinary = "";
+            for (int i = 0; i < buffer.Length; ++i)
+            {
+                stringBinary += buffer[i].ToString("X2");
+            }
+
+            return stringBinary;
+        }
+        #endregion
     }
 }
