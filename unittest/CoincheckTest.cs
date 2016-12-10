@@ -59,5 +59,16 @@ namespace unittest
            
         }
 
+        [Test]
+        public void testConstructorWithArg()
+        {
+            // want to test constructor with args
+            // WebClientを外だしして外から与えるようにして、依存性を外す
+            // 外だしすることで、モックオブジェクトを使用してテストが可能になる
+
+        }
+
+        
+
     }
 }
