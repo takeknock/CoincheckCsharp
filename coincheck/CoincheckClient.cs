@@ -17,7 +17,7 @@ namespace Coincheck
 { 
     public class CoincheckClient
     {
-        private readonly string _target;
+        private readonly string _target = "https://coincheck.com";
 
         private List<string> _gettablePair = new List<string>() { "btc_jpy", "eth_jpy", "etc_jpy", "dao_jpy", "lsk_jpy", "fct_jpy", "xmr_jpy", "rep_jpy", "xrp_jpy", "zec_jpy", "eth_btc", "etc_btc", "lsk_btc", "fct_btc", "xmr_btc", "rep_btc", "xrp_btc", "zec_btc" };
 
@@ -26,7 +26,6 @@ namespace Coincheck
 
         public CoincheckClient()
         {
-            _target = "https://coincheck.com/";
         }
 
         public CoincheckClient(string key, string secret)
@@ -37,7 +36,7 @@ namespace Coincheck
 
         public string getTicker()
         {
-            string tickerTarget = _target + "api/ticker";
+            string tickerTarget = _target + "/api/ticker";
             string response;
             using (WebClient client = new WebClient())
             {
@@ -49,7 +48,7 @@ namespace Coincheck
 
         public string getTrades()
         {
-            string tradesTarget = _target + "api/trades";
+            string tradesTarget = _target + "/api/trades";
             string response;
             using (WebClient client = new WebClient())
             {
@@ -62,7 +61,7 @@ namespace Coincheck
         public string getOrderbooks()
         {
 
-            string orderbookTarget = _target + "api/order_books";
+            string orderbookTarget = _target + "/api/order_books";
             string response;
             using (WebClient client = new WebClient())
             {
@@ -103,7 +102,7 @@ namespace Coincheck
                 throw new NotSupportedException(pair + "is not supported.");
             }
 
-            string fxRateTarget = _target + "api/rate/" + pair;
+            string fxRateTarget = _target + "/api/rate/" + pair;
 
             Console.WriteLine(fxRateTarget);
 
@@ -119,10 +118,10 @@ namespace Coincheck
 
         public string createOrder(string orderType, double rate, double amount, string marketBuyAmount, string positionId, string pair)
         {
-            string createOrderTarget = _target + "api/exchange/orders";
+            // not tested
+            string createOrderTarget = _target + "/api/exchange/orders";
             Dictionary<string, string> headers = getHeaders(createOrderTarget);
-            var response = new HttpResponseMessage();
-
+            
             HttpRequestMessage request = new HttpRequestMessage();
             foreach(var i in headers)
             {
