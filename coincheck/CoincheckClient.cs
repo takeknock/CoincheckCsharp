@@ -132,6 +132,28 @@ namespace Coincheck
             return result.Result;
         }
 
+        public string getOutstandingOrders()
+        {
+            string openedOrdersTarget = _target + "/api/exchange/orders/opens";
+            Dictionary<string, string> headers = getHeaders(openedOrdersTarget);
+            HttpRequestMessage request = new HttpRequestMessage();
+
+            request.RequestUri = new Uri(openedOrdersTarget);
+            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            request.Method = HttpMethod.Post;
+            //request.Headers.Host = _target;
+            //foreach (var i in headers)
+            //{
+            //    request.Headers.Add(i.Key, i.Value);
+            //}
+
+            string content = "{\"ACCESS-KEY\":" + headers["ACCESS-KEY"] + ",\"ACCESS-NONCE\":" + headers["ACCESS-NONCE"] + ",\"ACCESS-SIGNATURE\":" + headers["ACCESS-SIGNATURE"] + "}";
+            request.Content = new StringContent(content, Encoding.UTF8, "application/json");
+
+            var result = getResponse(request);
+            return result.Result;
+        }
+
         #region private functions
         private async Task<string> getResponse(HttpRequestMessage request)
         {
@@ -159,7 +181,6 @@ namespace Coincheck
             }
 
             Dictionary<string, string> result = new Dictionary<string, string>();
-            result.Add("Content-Type", "application/json");
             result.Add("ACCESS-KEY", _key);
             result.Add("ACCESS-NONCE", nonce);
             result.Add("ACCESS-SIGNATURE", signature);
