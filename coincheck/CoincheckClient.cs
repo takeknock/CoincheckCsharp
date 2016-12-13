@@ -138,11 +138,11 @@ namespace Coincheck
 
         public string getOutstandingOrders()
         {
-            string openedOrdersTarget = _target + "/api/exchange/orders/opens";
-            Dictionary<string, string> headers = getHeaders(openedOrdersTarget);
+            string outstandingsTarget = _target + "/api/exchange/orders/opens";
+            Dictionary<string, string> headers = getHeaders(outstandingsTarget);
             HttpRequestMessage request = new HttpRequestMessage();
 
-            request.RequestUri = new Uri(openedOrdersTarget);
+            request.RequestUri = new Uri(outstandingsTarget);
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             request.Method = HttpMethod.Post;
             //request.Headers.Host = _target;
