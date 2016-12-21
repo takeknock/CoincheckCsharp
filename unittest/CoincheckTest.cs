@@ -68,6 +68,21 @@ namespace unittest
 
         }
 
+        [Test]
+        public void testCreateOrder()
+        {
+            
+            string orderType = "buy";
+
+
+        }
+
+        [Test]
+        public void testGetOutstandingOrder()
+        {
+            var actual = client.getOutstandingOrders();
+            //Console.WriteLine(actual);
+        }
         
 
     }
