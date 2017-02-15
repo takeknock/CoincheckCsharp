@@ -140,22 +140,33 @@ namespace Coincheck
         {
             string outstandingsTarget = _target + "/api/exchange/orders/opens";
             Dictionary<string, string> headers = getHeaders(outstandingsTarget);
-            HttpRequestMessage request = new HttpRequestMessage();
 
-            request.RequestUri = new Uri(outstandingsTarget);
-            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            request.Method = HttpMethod.Post;
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(outstandingsTarget);
+            request.Headers.Add("ACCESS-KEY", headers["ACCESS-KEY"]);
+            request.Headers.Add("ACCESS-NONCE", headers["ACCESS-NONCE"]);
+            request.Headers.Add("ACCESS-SIGNATURE", headers["ACCESS-SIGNATURE"]);
             //request.Headers.Host = _target;
             //foreach (var i in headers)
             //{
             //    request.Headers.Add(i.Key, i.Value);
             //}
 
-            string content = "{\"ACCESS-KEY\":" + headers["ACCESS-KEY"] + ",\"ACCESS-NONCE\":" + headers["ACCESS-NONCE"] + ",\"ACCESS-SIGNATURE\":" + headers["ACCESS-SIGNATURE"] + "}";
-            request.Content = new StringContent(content, Encoding.UTF8, "application/json");
+            //string content = "{\"ACCESS-KEY\":" + headers["ACCESS-KEY"] + ",\"ACCESS-NONCE\":" + headers["ACCESS-NONCE"] + ",\"ACCESS-SIGNATURE\":" + headers["ACCESS-SIGNATURE"] + "}";
+            //request.Content = new StringContent(content, Encoding.UTF8, "application/json");
 
-            var result = getResponse(request);
-            return result.Result;
+            //var result = getResponse((HttpRequestMessage)request);
+            HttpWebResponse result = (HttpWebResponse)request.GetResponse();
+            return result.StatusCode.ToString();
+        }
+
+        public string getOwnTransactionResults()
+        {
+            string transactionsTarget = _target + "/api/exchange/orders/transactions";
+
+            Dictionary<string, string> headers = getHeaders(transactionsTarget);
+
+            return "";
+
         }
 
         #region private functions
@@ -170,7 +181,7 @@ namespace Coincheck
         }
 
 
-        private Dictionary<string, string> getHeaders(string uri, string body="")
+        private Dictionary<string, string> getHeaders(string uri, string body="hoge=foo")
         {
             UnixTime now = new UnixTime(DateTime.Now);
             string nonce = now._value.ToString();
