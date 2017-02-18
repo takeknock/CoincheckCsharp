@@ -11,7 +11,7 @@ using System.Collections.Specialized;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Cryptography;
-
+using Newtonsoft.Json;
 
 namespace Coincheck
 { 
@@ -168,6 +168,62 @@ namespace Coincheck
             return "";
 
         }
+
+        internal async Task<string> Send(HttpClient http, Uri path, string apikey,
+            string secret, string method, Dictionary<string, string> query = null, 
+            object body = null)
+        {
+            if (query != null && query.Any())
+            {
+                var content = new FormUrlEncodedContent(query);
+                string q = await content.ReadAsStringAsync();
+
+                path = new Uri(path.ToString() + "?" + q, UriKind.Relative);
+            }
+
+            string timestamp = DateTimeOffset.Now.ToUniversalTime().ToString();
+
+            string jsonBody = body == null ? "" : JsonConvert.SerializeObject(body);
+
+            // POSTするメッセージを作成
+            string message = timestamp + method + path.ToString() + jsonBody;
+
+            // メッセージをHMACSHA256で署名
+            byte[] hash = new HMACSHA256(Encoding.UTF8.GetBytes(secret)).ComputeHash(Encoding.UTF8.GetBytes(message));
+            string sign = BitConverter.ToString(hash).ToLower().Replace("-", "");//バイト配列をを16進文字列へ
+
+            // HTTPヘッダをセット
+            http.DefaultRequestHeaders.Clear();
+            http.DefaultRequestHeaders.Add("ACCESS-KEY", apikey);
+            http.DefaultRequestHeaders.Add("ACCESS-TIMESTAMP", timestamp);
+            http.DefaultRequestHeaders.Add("ACCESS-SIGN", sign);
+
+            // 送信
+            HttpResponseMessage res;
+            if (method == "POST")
+            {
+                var content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+                res = await http.PostAsync(path, content);
+            }
+            else if (method == "GET")
+            {
+                res = await http.GetAsync(path);
+            }
+            else
+            {
+                throw new ArgumentException("method は POST か GET を指定してください。", method);
+            }
+
+            //返答内容を取得
+            string text = await res.Content.ReadAsStringAsync();
+
+            //通信上の失敗
+            if (!res.IsSuccessStatusCode)
+                return "";
+
+            return text;
+        }
+    
 
         #region private functions
         private async Task<string> getResponse(HttpRequestMessage request)
