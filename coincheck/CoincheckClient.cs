@@ -26,7 +26,6 @@ namespace Coincheck
 
         private string _key;
         private string _secret;
-        
 
         public CoincheckClient()
         {
@@ -37,6 +36,7 @@ namespace Coincheck
         {
             _key = key;
             _secret = secret;
+            http.BaseAddress = new Uri("https://coincheck.com");
         }
 
         public string getTicker()
