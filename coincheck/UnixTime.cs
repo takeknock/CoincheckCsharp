@@ -12,9 +12,16 @@ namespace Coincheck
 
         public long _value { get; private set; }
 
-        public UnixTime(DateTime dateTime)
+        public UnixTime()
         {
-            _value = (long)(dateTime.ToUniversalTime() - UNIXEPOCH).TotalSeconds;
+            _value = (long)(DateTimeOffset.UtcNow - UNIXEPOCH).TotalSeconds;
         }
+
+        public override string ToString()
+        {
+            return _value.ToString();
+        }
+
+
     }
 }
