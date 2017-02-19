@@ -94,7 +94,7 @@ namespace Coincheck
         //    return response;
         //}
 
-        async public Task<string> getFxRate(string pair)
+        async public Task<string> getFxRateAsync(string pair)
         {   
             if (!_gettablePair.Contains(pair))
             {

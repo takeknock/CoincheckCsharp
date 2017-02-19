@@ -51,11 +51,11 @@ namespace unittest
         {
             string correctPair = "btc_jpy";
             string notSupportedPair = "ttt_ttt";
-            Task<string> fxRate = client.getFxRate(correctPair);
+            Task<string> fxRate = client.getFxRateAsync(correctPair);
             Assert.AreNotEqual(fxRate, "");
 
             Assert.That(() =>
-                client.getFxRate(notSupportedPair), Throws.Exception.TypeOf<NotSupportedException>());
+                client.getFxRateAsync(notSupportedPair), Throws.Exception.TypeOf<NotSupportedException>());
            
         }
 
