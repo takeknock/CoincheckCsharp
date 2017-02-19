@@ -29,7 +29,7 @@ namespace Coincheck
             {"orderbook", "/api/order_books" },
             {"assets", "/api/accounts/balance" },
             {"createOrders", "/api/exchange/orders" },
-            {"fxRates", "/api/rate" }
+            {"fxRates", "/api/rate/" }
         };
 
         private string _key;
@@ -91,26 +91,27 @@ namespace Coincheck
         //    }
 
 
-        //        return response;
+        //    return response;
         //}
 
-        public string getFxRate(string pair)
-        {
-            
+        async public Task<string> getFxRate(string pair)
+        {   
             if (!_gettablePair.Contains(pair))
             {
-                throw new NotSupportedException(pair + "is not supported.");
+                throw new NotSupportedException("[" + pair + "] is not supported.");
             }
 
-            string fxRateTarget = _target + "/api/rate/" + pair;
+            string fxRateTarget = paths["fxRates"] + pair;
+            Uri path = new Uri(fxRateTarget, UriKind.Relative);
 
-            Console.WriteLine(fxRateTarget);
+            string response = await Sender.SendAsync(http, path, _key, _secret, "GET");
+            //Console.WriteLine(fxRateTarget);
 
-            string response;
-            using (WebClient client = new WebClient())
-            {
-                response = client.DownloadString(fxRateTarget);
-            }
+            //string response;
+            //using (WebClient client = new WebClient())
+            //{
+            //    response = client.DownloadString(fxRateTarget);
+            //}
 
             return response;
         }
