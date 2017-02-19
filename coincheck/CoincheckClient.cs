@@ -26,7 +26,7 @@ namespace Coincheck
         {
             {"ticker", "/api/ticker" },
             {"trades", "/api/trades" },
-            {"books", "/api/order_books" },
+            {"orderbook", "/api/order_books" },
             {"assets", "/api/accounts/balance" },
             {"createOrders", "/api/exchange/orders" },
             {"fxRates", "/api/rate" }
@@ -47,6 +47,7 @@ namespace Coincheck
             http.BaseAddress = new Uri("https://coincheck.com");
         }
 
+
         async public Task<string> getTicker()
         {
             Uri path = new Uri(paths["ticker"], UriKind.Relative);
@@ -62,15 +63,10 @@ namespace Coincheck
             return response;
         }
 
-        public string getOrderbooks()
+        async public Task<string> getOrderbook()
         {
-
-            string orderbookTarget = _target + "/api/order_books";
-            string response;
-            using (WebClient client = new WebClient())
-            {
-                response = client.DownloadString(orderbookTarget);
-            }
+            Uri path = new Uri(paths["orderbook"], UriKind.Relative);
+            string response = await Sender.SendAsync(http, path, _key, _secret, "GET");
 
             return response;
         }

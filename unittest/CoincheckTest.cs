@@ -15,15 +15,15 @@ namespace unittest
         [Test]
         public void testGetTicker()
         {
-            string ticker = client.getTicker();
-            Assert.AreNotEqual(ticker, "");
+            Task<string> ticker = client.getTicker();
+            Assert.AreNotEqual(ticker.Result, "");
             
         }
 
         [Test]
         public void testGetTrade()
         {
-            string trades = client.getTrades();
+            Task<string> trades = client.getTrades();
             //Console.WriteLine(trades);
             Assert.AreNotEqual(trades, "");
         }
@@ -31,7 +31,7 @@ namespace unittest
         [Test]
         public void testGetOrderbooks()
         {
-            string orderBook = client.getOrderbooks();
+            Task<string> orderBook = client.getOrderbook();
             //Console.WriteLine(orderBook);
             Assert.AreNotEqual(orderBook, "");
         }
