@@ -50,20 +50,15 @@ namespace Coincheck
         async public Task<string> getTicker()
         {
             Uri path = new Uri(paths["ticker"], UriKind.Relative);
-            string response = await Send(http, path, _key, _secret, "GET");
+            string response = await Sender.SendAsync(http, path, _key, _secret, "GET");
             
             return response;
         }       
 
-        public string getTrades()
+        async public Task<string> getTrades()
         {
-            string tradesTarget = _target + "/api/trades";
-            string response;
-            using (WebClient client = new WebClient())
-            {
-                response = client.DownloadString(tradesTarget);
-            }
-
+            Uri path = new Uri(paths["trades"], UriKind.Relative);
+            string response = await Sender.SendAsync(http, path, _key, _secret, "GET");
             return response;
         }
 
