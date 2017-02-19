@@ -47,15 +47,11 @@ namespace Coincheck
             http.BaseAddress = new Uri("https://coincheck.com");
         }
 
-        public string getTicker()
+        async public Task<string> getTicker()
         {
-            string tickerTarget = _target + "/api/ticker";
-            string response;
-            using (WebClient client = new WebClient())
-            {
-                response = client.DownloadString(tickerTarget);
-            }
-
+            Uri path = new Uri(paths["ticker"], UriKind.Relative);
+            string response = await Send(http, path, _key, _secret, "GET");
+            
             return response;
         }       
 
