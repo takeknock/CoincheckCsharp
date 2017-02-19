@@ -15,7 +15,7 @@ namespace unittest
         [Test]
         public void testGetTicker()
         {
-            Task<string> ticker = client.getTicker();
+            Task<string> ticker = client.getTickerAsync();
             Assert.AreNotEqual(ticker.Result, "");
             
         }
@@ -23,7 +23,7 @@ namespace unittest
         [Test]
         public void testGetTrade()
         {
-            Task<string> trades = client.getTrades();
+            Task<string> trades = client.getTradesAsync();
             //Console.WriteLine(trades);
             Assert.AreNotEqual(trades, "");
         }
@@ -31,7 +31,7 @@ namespace unittest
         [Test]
         public void testGetOrderbooks()
         {
-            Task<string> orderBook = client.getOrderbook();
+            Task<string> orderBook = client.getOrderbookAsync();
             //Console.WriteLine(orderBook);
             Assert.AreNotEqual(orderBook, "");
         }
@@ -51,7 +51,7 @@ namespace unittest
         {
             string correctPair = "btc_jpy";
             string notSupportedPair = "ttt_ttt";
-            string fxRate = client.getFxRate(correctPair);
+            Task<string> fxRate = client.getFxRate(correctPair);
             Assert.AreNotEqual(fxRate, "");
 
             Assert.That(() =>

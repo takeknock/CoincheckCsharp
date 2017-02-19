@@ -48,7 +48,7 @@ namespace Coincheck
         }
 
 
-        async public Task<string> getTicker()
+        async public Task<string> getTickerAsync()
         {
             Uri path = new Uri(paths["ticker"], UriKind.Relative);
             string response = await Sender.SendAsync(http, path, _key, _secret, "GET");
@@ -56,14 +56,14 @@ namespace Coincheck
             return response;
         }       
 
-        async public Task<string> getTrades()
+        async public Task<string> getTradesAsync()
         {
             Uri path = new Uri(paths["trades"], UriKind.Relative);
             string response = await Sender.SendAsync(http, path, _key, _secret, "GET");
             return response;
         }
 
-        async public Task<string> getOrderbook()
+        async public Task<string> getOrderbookAsync()
         {
             Uri path = new Uri(paths["orderbook"], UriKind.Relative);
             string response = await Sender.SendAsync(http, path, _key, _secret, "GET");
