@@ -105,13 +105,6 @@ namespace Coincheck
             Uri path = new Uri(fxRateTarget, UriKind.Relative);
 
             string response = await Sender.SendAsync(http, path, _key, _secret, "GET");
-            //Console.WriteLine(fxRateTarget);
-
-            //string response;
-            //using (WebClient client = new WebClient())
-            //{
-            //    response = client.DownloadString(fxRateTarget);
-            //}
 
             return response;
         }
