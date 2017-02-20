@@ -229,8 +229,8 @@ namespace Coincheck
 
         private Dictionary<string, string> getHeaders(string uri, string body="hoge=foo")
         {
-            UnixTime now = new UnixTime(DateTime.Now);
-            string nonce = now._value.ToString();
+            UnixTime unixtime = new UnixTime();
+            string nonce = unixtime.ToString();
             string message = nonce + uri + body;
 
             var keyByte = Encoding.UTF8.GetBytes(_secret);
