@@ -27,6 +27,7 @@ namespace Coincheck
             {"ticker", "/api/ticker" },
             {"trades", "/api/trades" },
             {"orderbook", "/api/order_books" },
+            {"orderrate", "/api/exchange/orders/rate" },
             {"assets", "/api/accounts/balance" },
             {"createOrders", "/api/exchange/orders" },
             {"fxRates", "/api/rate/" }
@@ -71,28 +72,28 @@ namespace Coincheck
             return response;
         }
 
-        //public string getExchangeRate(string order, string pair, double amount, double price)
-        //{
-        //    string exchangeRateTarget = target + "/api/exchange/orders/rate";
-        //    string parameters = "&order_type=" + order + "&pair=" + pair + "&amount=" + amount.ToString() + "&price=" + price.ToString();
-        //    string thisTarget = exchangeRateTarget + parameters;
-        //    string response;
+        //error
+        async public Task<string> getExchangeRateAsync(string order, string pair, double amount, int price)
+        {
+            Uri path = new Uri(paths["orderrate"], UriKind.Relative);
+            //Dictionary<string, string> parameters =
+            //    new Dictionary<string, string>
+            //    {
+            //        {"order_type", order },
+            //        {"pair", pair },
+            //        {"amount", amount.ToString() },
+            //        {"price", price.ToString() }
+            //    };
+            Dictionary<string, string> parameters =
+                new Dictionary<string, string>
+                {
+                    {"order_type", order },
+                    {"pair", pair }
+                };
+            string response = await Sender.SendAsync(http, path, _key, _secret, "GET", parameters);
 
-        //    NameValueCollection nvc = new NameValueCollection();
-        //    nvc.Add("order_type", order);
-        //    nvc.Add("pair", pair);
-        //    nvc.Add("amount", amount.ToString());
-        //    nvc.Add("price", price.ToString());
-            
-        //    using (WebClient client = new WebClient())
-        //    {
-        //        client.QueryString = nvc;
-        //        response = client.DownloadString(thisTarget);
-        //    }
-
-
-        //    return response;
-        //}
+            return response;
+        }
 
         async public Task<string> getFxRateAsync(string pair)
         {   
