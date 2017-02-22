@@ -156,10 +156,9 @@ namespace Coincheck
 
             string method = "GET";
 
-            Task<string> json = Sender.SendAsync(http, path, _key, _secret, method);
+            string json = await Sender.SendAsync(http, path, _key, _secret, method);
             //Dictionary<string, string> headers = getHeaders(transactionsTarget);
-            Console.WriteLine("orders result:");
-            Console.WriteLine(json);
+            return json;
 
         }
 
