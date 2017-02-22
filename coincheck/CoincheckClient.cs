@@ -139,44 +139,15 @@ namespace Coincheck
         }
 
         async public Task<string> getOutstandingOrders()
-        {
-            
-            //HttpClient http = new HttpClient();
-            //http.BaseAddress = new Uri(_target);
-
+        {   
             Uri path = new Uri(paths["assets"], UriKind.Relative);
 
             string text = await Sender.SendAsync(http, path, _key, _secret, "GET");
 
             return text;
-            //string method = "POST";
-
-            //Task<string> json = Sender.SendAsync(http, path, _key, _secret, method);
-            //Console.WriteLine("getOutstandingOrders :");
-            //Console.WriteLine(json);
-            //return json.ToString();
-            //string outstandingsTarget = _target + "/api/exchange/orders/opens";
-            //Dictionary<string, string> headers = getHeaders(outstandingsTarget);
-
-            //HttpWebRequest request = (HttpWebRequest)WebRequest.Create(outstandingsTarget);
-            //request.Headers.Add("ACCESS-KEY", headers["ACCESS-KEY"]);
-            //request.Headers.Add("ACCESS-NONCE", headers["ACCESS-NONCE"]);
-            //request.Headers.Add("ACCESS-SIGNATURE", headers["ACCESS-SIGNATURE"]);
-            ////request.Headers.Host = _target;
-            ////foreach (var i in headers)
-            ////{
-            ////    request.Headers.Add(i.Key, i.Value);
-            ////}
-
-            ////string content = "{\"ACCESS-KEY\":" + headers["ACCESS-KEY"] + ",\"ACCESS-NONCE\":" + headers["ACCESS-NONCE"] + ",\"ACCESS-SIGNATURE\":" + headers["ACCESS-SIGNATURE"] + "}";
-            ////request.Content = new StringContent(content, Encoding.UTF8, "application/json");
-
-            ////var result = getResponse((HttpRequestMessage)request);
-            //HttpWebResponse result = (HttpWebResponse)request.GetResponse();
-            //return result.StatusCode.ToString();
         }
 
-         public void getOwnTransactionResults()
+        async public Task<string> getOwnTransactionResultsAsync()
         {
             HttpClient http = new HttpClient();
             http.BaseAddress = new Uri(_target);
