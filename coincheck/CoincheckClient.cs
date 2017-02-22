@@ -110,44 +110,32 @@ namespace Coincheck
             return response;
         }
 
-
-        public string createOrder(string orderType, double rate, double amount, string marketBuyAmount, string positionId, string pair)
+        // error
+        async public Task<string> createOrderAsync(string orderType, double rate, double amount, string pair)
         {
+
             // not tested
-            string createOrderTarget = _target + "/api/exchange/orders";
-            Dictionary<string, string> headers = getHeaders(createOrderTarget);
-            
-            HttpRequestMessage request = new HttpRequestMessage();
-            foreach(var i in headers)
-            {
-                request.Headers.Add(i.Key, i.Value);
-            }
-            request.Method = HttpMethod.Get;
-            var result = getResponse(request);
-            return result.Result;
-        }
+            //string createOrderTarget = _target + "/api/exchange/orders";
+            //Dictionary<string, string> headers = getHeaders(createOrderTarget);
 
-        public string getOutstandingOrders()
-        {
-            string outstandingsTarget = _target + "/api/exchange/orders/opens";
-            Dictionary<string, string> headers = getHeaders(outstandingsTarget);
-
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(outstandingsTarget);
-            request.Headers.Add("ACCESS-KEY", headers["ACCESS-KEY"]);
-            request.Headers.Add("ACCESS-NONCE", headers["ACCESS-NONCE"]);
-            request.Headers.Add("ACCESS-SIGNATURE", headers["ACCESS-SIGNATURE"]);
-            //request.Headers.Host = _target;
-            //foreach (var i in headers)
+            //HttpRequestMessage request = new HttpRequestMessage();
+            //foreach(var i in headers)
             //{
             //    request.Headers.Add(i.Key, i.Value);
             //}
+            //request.Method = HttpMethod.Get;
+            //var result = getResponse(request);
+            Uri path = new Uri(paths["createOrders"], UriKind.Relative);
 
-            //string content = "{\"ACCESS-KEY\":" + headers["ACCESS-KEY"] + ",\"ACCESS-NONCE\":" + headers["ACCESS-NONCE"] + ",\"ACCESS-SIGNATURE\":" + headers["ACCESS-SIGNATURE"] + "}";
-            //request.Content = new StringContent(content, Encoding.UTF8, "application/json");
-
-            //var result = getResponse((HttpRequestMessage)request);
-            HttpWebResponse result = (HttpWebResponse)request.GetResponse();
-            return result.StatusCode.ToString();
+            var param = new Dictionary<string, string>
+            {
+                {"pair", pair },
+                {"order_type", orderType },
+                {"rate", rate.ToString() },
+                {"amount", amount.ToString() }
+            };
+            string result = await Sender.SendAsync(http, path,_key, _secret, "POST", param);
+            return result;
         }
 
         public string getOwnTransactionResults()
