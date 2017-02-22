@@ -10,37 +10,6 @@ namespace Coincheck
 {
     static class Sender
     {
-        static internal async Task<string> SendAsync(HttpClient http, Uri path, string method, Dictionary<string, string> parameters = null)
-        {
-            if (parameters == null)
-                parameters = new Dictionary<string, string>();
-
-            var content = new FormUrlEncodedContent(parameters);
-            string param = await content.ReadAsStringAsync();
-
-            UnixTime unixtime = new UnixTime();
-            string nonce = unixtime.ToString();
-
-            Uri uri = new Uri(http.BaseAddress, path);
-
-            HttpResponseMessage res;
-            switch(method)
-            {
-                case "POST":
-                    res = await http.PostAsync(path, content);
-                    break;
-                case "GET":
-                    res = await http.GetAsync(path);
-                    break;
-                default:
-                    throw new ArgumentException("You can choose POST or GET as method.", method);
-            }
-
-            string text = await res.Content.ReadAsStringAsync();
-            if (!res.IsSuccessStatusCode)
-                return "";
-            return text;
-        }
 
         static internal async Task<string> SendAsync(HttpClient http, Uri path, string apiKey, string secret, string method, Dictionary<string, string> parameters = null)
         {
@@ -68,7 +37,7 @@ namespace Coincheck
                     res = await http.GetAsync(path);
                     break;
                 default:
-                    throw new ArgumentException("You can choose POST or GET as method.", method);
+                    throw new ArgumentException("You should choose POST or GET as method.", method);
             }
 
             string text = await res.Content.ReadAsStringAsync();
