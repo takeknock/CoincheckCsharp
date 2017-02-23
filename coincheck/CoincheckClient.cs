@@ -30,7 +30,8 @@ namespace Coincheck
             {"orderrate", "/api/exchange/orders/rate" },
             {"assets", "/api/accounts/balance" },
             {"createOrders", "/api/exchange/orders" },
-            {"fxRates", "/api/rate/" }
+            {"fxRates", "/api/rate/" },
+            {"openorders", "/api/exchange/orders/opens" }
         };
 
         private string _key;
@@ -173,6 +174,14 @@ namespace Coincheck
             Console.WriteLine("Order books: ");
             Console.WriteLine(json);
             //return res.ToString();
+        }
+
+        async public Task<string> getOpenordersAsync()
+        {
+            Uri path = new Uri(paths["openorders"], UriKind.Relative);
+            string orders = await Sender.SendAsync(http, path, _key, _secret, "GET");
+
+            return orders;
         }
 
     }
