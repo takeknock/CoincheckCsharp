@@ -14,7 +14,7 @@ namespace Coincheck
 
         public UnixTime()
         {
-            _value = (long)(DateTimeOffset.UtcNow - UNIXEPOCH).TotalSeconds;
+            _value = (long)((DateTimeOffset.UtcNow - UNIXEPOCH).TotalSeconds * 1000.0);
         }
 
         public override string ToString()
