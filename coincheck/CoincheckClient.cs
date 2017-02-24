@@ -29,7 +29,7 @@ namespace Coincheck
             {"orderbook", "/api/order_books" },
             {"orderrate", "/api/exchange/orders/rate" },
             {"assets", "/api/accounts/balance" },
-            {"createOrders", "/api/exchange/orders" },
+            {"orders", "/api/exchange/orders" },
             {"fxRates", "/api/rate/" },
             {"openorders", "/api/exchange/orders/opens" }
         };
@@ -116,17 +116,7 @@ namespace Coincheck
         {
 
             // not tested
-            //string createOrderTarget = _target + "/api/exchange/orders";
-            //Dictionary<string, string> headers = getHeaders(createOrderTarget);
-
-            //HttpRequestMessage request = new HttpRequestMessage();
-            //foreach(var i in headers)
-            //{
-            //    request.Headers.Add(i.Key, i.Value);
-            //}
-            //request.Method = HttpMethod.Get;
-            //var result = getResponse(request);
-            Uri path = new Uri(paths["createOrders"], UriKind.Relative);
+            Uri path = new Uri(paths["orders"], UriKind.Relative);
 
             var param = new Dictionary<string, string>
             {
