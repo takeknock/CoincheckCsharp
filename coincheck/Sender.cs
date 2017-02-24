@@ -27,24 +27,25 @@ namespace Coincheck
             string sign = generateSignature(secret, message);
             setHttpHeaders(ref http, apiKey, nonce, sign);
 
-            HttpResponseMessage res;
+            HttpResponseMessage responce;
             switch (method)
             {
                 case "POST":
-                    res = await http.PostAsync(path, content);
+                    responce = await http.PostAsync(path, content);
                     break;
                 case "GET":
-                    res = await http.GetAsync(path);
+                    responce = await http.GetAsync(path);
                     break;
                 case "DELETE":
-                    res = await http.DeleteAsync(path);
+                    responce = await http.DeleteAsync(path);
                     break;
                 default:
                     throw new ArgumentException("You should choose POST or GET as method.", method);
             }
-            string text = await res.Content.ReadAsStringAsync();
 
-            if (!res.IsSuccessStatusCode)
+            string text = await responce.Content.ReadAsStringAsync();
+
+            if (!responce.IsSuccessStatusCode)
                 return "";
 
             return text;
