@@ -42,11 +42,9 @@ namespace Coincheck
                 default:
                     throw new ArgumentException("You should choose POST or GET as method.", method);
             }
+            responce.EnsureSuccessStatusCode();
 
             string text = await responce.Content.ReadAsStringAsync();
-
-            if (!responce.IsSuccessStatusCode)
-                return "";
 
             return text;
         }
