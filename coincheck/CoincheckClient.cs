@@ -176,10 +176,10 @@ namespace Coincheck
 
         async public Task<string> cancelOrder(string orderId)
         {
-            Uri path = new Uri(paths["orders"], UriKind.Relative);
-            Uri pathId = new Uri(path, new Uri(orderId, UriKind.Relative));
+            string pId = paths["orders"] + "/" + orderId;
+            Uri pathId = new Uri(pId, UriKind.Relative);
 
-            string cancelOrder = await Sender.SendAsync(http, path, _key, _secret, "DELETE");
+            string cancelOrder = await Sender.SendAsync(http, pathId, _key, _secret, "DELETE");
 
             return cancelOrder;
         }

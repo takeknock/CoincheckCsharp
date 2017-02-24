@@ -36,10 +36,12 @@ namespace Coincheck
                 case "GET":
                     res = await http.GetAsync(path);
                     break;
+                case "DELETE":
+                    res = await http.DeleteAsync(path);
+                    break;
                 default:
                     throw new ArgumentException("You should choose POST or GET as method.", method);
             }
-
             string text = await res.Content.ReadAsStringAsync();
 
             if (!res.IsSuccessStatusCode)
