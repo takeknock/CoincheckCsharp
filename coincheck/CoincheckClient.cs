@@ -138,7 +138,7 @@ namespace Coincheck
             return text;
         }
 
-        async public Task<string> getOwnTransactionResultsAsync()
+        async public Task<string> getOwnTransactionPaginationAsync()
         {
             HttpClient http = new HttpClient();
             http.BaseAddress = new Uri(_target);
@@ -151,6 +151,15 @@ namespace Coincheck
             //Dictionary<string, string> headers = getHeaders(transactionsTarget);
             return json;
 
+        }
+
+        async public Task<string> getOwnTransactionAsync()
+        {
+            Uri path = new Uri("/api/exchange/orders/transactions", UriKind.Relative);
+            string method = "GET";
+
+            string json = await Sender.SendAsync(http, path, _key, _secret, method);
+            return json;
         }
 
         async public void getOrderBooks()
