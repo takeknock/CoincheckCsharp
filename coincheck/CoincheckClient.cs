@@ -31,7 +31,9 @@ namespace Coincheck
             {"assets", "/api/accounts/balance" },
             {"orders", "/api/exchange/orders" },
             {"fxRates", "/api/rate/" },
-            {"openorders", "/api/exchange/orders/opens" }
+            {"openorders", "/api/exchange/orders/opens" },
+            {"transactions", "/api/exchange/orders/transactions" },
+            {"pagination", "/api/exchange/orders/transactions_pagination" }
         };
 
         private string _key;
@@ -143,7 +145,7 @@ namespace Coincheck
             HttpClient http = new HttpClient();
             http.BaseAddress = new Uri(_target);
             Uri path = 
-                new Uri("/api/exchange/orders/transactions_pagination", UriKind.Relative);
+                new Uri(paths["pagination"], UriKind.Relative);
 
             string method = "GET";
 
@@ -155,7 +157,7 @@ namespace Coincheck
 
         async public Task<string> getOwnTransactionAsync()
         {
-            Uri path = new Uri("/api/exchange/orders/transactions", UriKind.Relative);
+            Uri path = new Uri(paths["transactions"], UriKind.Relative);
             string method = "GET";
 
             string json = await Sender.SendAsync(http, path, _key, _secret, method);
