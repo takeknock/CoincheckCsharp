@@ -128,7 +128,7 @@ namespace Coincheck
             return result;
         }
 
-        async public Task<string> getOutstandingOrders()
+        async public Task<string> getOutstandingOrdersAsync()
         {   
             Uri path = new Uri(paths["assets"], UriKind.Relative);
 
