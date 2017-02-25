@@ -74,8 +74,7 @@ namespace Coincheck
 
             return response;
         }
-
-        //error
+        
         async public Task<string> getExchangeRateAsync(string order, string pair, double amount, int price)
         {
             Uri path = new Uri(paths["orderrate"], UriKind.Relative);
@@ -112,12 +111,10 @@ namespace Coincheck
 
             return response;
         }
-
-        // error
+        
         async public Task<string> createOrderAsync(string orderType, double rate, double amount, string pair)
         {
 
-            // not tested
             Uri path = new Uri(paths["orders"], UriKind.Relative);
 
             var param = new Dictionary<string, string>
@@ -150,7 +147,6 @@ namespace Coincheck
             string method = "GET";
 
             string json = await Sender.SendAsync(http, path, _key, _secret, method);
-            //Dictionary<string, string> headers = getHeaders(transactionsTarget);
             return json;
 
         }
