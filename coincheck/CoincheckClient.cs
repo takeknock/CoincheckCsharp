@@ -160,19 +160,6 @@ namespace Coincheck
             return json;
         }
 
-        async public void getOrderBooks()
-        {
-            HttpClient http = new HttpClient();
-            http.BaseAddress = new Uri(_target);
-            Uri path = new Uri("/api/order_books", UriKind.Relative);
-
-            string json = await Sender.SendAsync(http, path, _key, _secret, "GET");
-
-            Console.WriteLine("Order books: ");
-            Console.WriteLine(json);
-            //return res.ToString();
-        }
-
         async public Task<string> getOpenordersAsync()
         {
             Uri path = new Uri(paths["openorders"], UriKind.Relative);
