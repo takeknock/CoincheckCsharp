@@ -37,7 +37,8 @@ namespace Coincheck
             {"leveragePositions", "/api/exchange/leverage/positions" },
             {"leverageBalance", "/api/accounts/leverage_balance" },
             {"account", "/api/accounts" },
-            {"send", "/api/send_money" }
+            {"send", "/api/send_money" },
+            {"deposit", "/api/deposit_money" }
         };
 
         private string _key;
@@ -237,6 +238,14 @@ namespace Coincheck
         //    return sendHistory;
         //}
 
+        async public Task<string> getDepositHistory(string currency = "btc_jpy")
+        {
+            string param = "?currency=" + currency;
+            Uri path = new Uri(paths["deposit"] + param, UriKind.Relative);
+
+            string history = await Sender.SendAsync(http, path, _key, _secret, "GET");
+            return history;
+        }
 
 
     }
