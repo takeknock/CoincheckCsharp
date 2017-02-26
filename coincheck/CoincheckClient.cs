@@ -34,7 +34,8 @@ namespace Coincheck
             {"openorders", "/api/exchange/orders/opens" },
             {"transactions", "/api/exchange/orders/transactions" },
             {"pagination", "/api/exchange/orders/transactions_pagination" },
-            {"leveragePositions", "/api/exchange/leverage/positions" }
+            {"leveragePositions", "/api/exchange/leverage/positions" },
+            {"leverageBalance", "/api/accounts/leverage_balance" }
         };
 
         private string _key;
@@ -186,6 +187,15 @@ namespace Coincheck
             string checkResult = await Sender.SendAsync(http, path, _key, _secret, "GET");
 
             return checkResult;
+        }
+
+        async public Task<string> checkLeverageBalance()
+        {
+            Uri path = new Uri(paths["leverageBalance"], UriKind.Relative);
+            string checkResult = await Sender.SendAsync(http, path, _key, _secret, "GET");
+
+            return checkResult;
+
         }
 
     }
