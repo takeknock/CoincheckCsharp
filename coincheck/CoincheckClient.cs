@@ -226,17 +226,15 @@ namespace Coincheck
 
         //}
 
-        //async public Task<string> getSendHistory(string currency = "btc_jpy")
-        //{
-        //    Uri path = new Uri(paths["send"], UriKind.Relative);
-        //    Dictionary<string, string> param = new Dictionary<string, string>()
-        //    {
-        //        {"currency", currency }
-        //    };
-        //    string sendHistory =
-        //        await Sender.SendAsync(http, path, _key, _secret, "GET", param);
-        //    return sendHistory;
-        //}
+        async public Task<string> getSendHistory(string currency = "btc_jpy")
+        {
+            string param = "?currency=" + currency;
+            Uri path = new Uri(paths["send"] + param, UriKind.Relative);
+
+            string sendHistory =
+                await Sender.SendAsync(http, path, _key, _secret, "GET");
+            return sendHistory;
+        }
 
         async public Task<string> getDepositHistory(string currency = "btc_jpy")
         {
