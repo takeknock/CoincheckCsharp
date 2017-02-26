@@ -38,7 +38,8 @@ namespace Coincheck
             {"leverageBalance", "/api/accounts/leverage_balance" },
             {"account", "/api/accounts" },
             {"send", "/api/send_money" },
-            {"deposit", "/api/deposit_money" }
+            {"deposit", "/api/deposit_money" },
+            {"bankAccount", "/api/bank_accounts" }
         };
 
         private string _key;
@@ -245,6 +246,12 @@ namespace Coincheck
             return history;
         }
 
+        async public Task<string> getBankAccountInfo()
+        {
+            Uri path = new Uri(paths["bankAccount"], UriKind.Relative);
+            string info = await Sender.SendAsync(http, path, _key, _secret, "GET");
+            return info;
+        }
 
     }
 }
