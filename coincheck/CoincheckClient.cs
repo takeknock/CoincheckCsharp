@@ -74,8 +74,7 @@ namespace Coincheck
 
             return response;
         }
-
-        //error
+        
         async public Task<string> getExchangeRateAsync(string order, string pair, double amount, int price)
         {
             Uri path = new Uri(paths["orderrate"], UriKind.Relative);
@@ -112,12 +111,10 @@ namespace Coincheck
 
             return response;
         }
-
-        // error
+        
         async public Task<string> createOrderAsync(string orderType, double rate, double amount, string pair)
         {
 
-            // not tested
             Uri path = new Uri(paths["orders"], UriKind.Relative);
 
             var param = new Dictionary<string, string>
@@ -131,7 +128,7 @@ namespace Coincheck
             return result;
         }
 
-        async public Task<string> getOutstandingOrders()
+        async public Task<string> getOutstandingOrdersAsync()
         {   
             Uri path = new Uri(paths["assets"], UriKind.Relative);
 
@@ -150,7 +147,6 @@ namespace Coincheck
             string method = "GET";
 
             string json = await Sender.SendAsync(http, path, _key, _secret, method);
-            //Dictionary<string, string> headers = getHeaders(transactionsTarget);
             return json;
 
         }
@@ -162,19 +158,6 @@ namespace Coincheck
 
             string json = await Sender.SendAsync(http, path, _key, _secret, method);
             return json;
-        }
-
-        async public void getOrderBooks()
-        {
-            HttpClient http = new HttpClient();
-            http.BaseAddress = new Uri(_target);
-            Uri path = new Uri("/api/order_books", UriKind.Relative);
-
-            string json = await Sender.SendAsync(http, path, _key, _secret, "GET");
-
-            Console.WriteLine("Order books: ");
-            Console.WriteLine(json);
-            //return res.ToString();
         }
 
         async public Task<string> getOpenordersAsync()
