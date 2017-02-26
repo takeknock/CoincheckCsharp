@@ -33,7 +33,8 @@ namespace Coincheck
             {"fxRates", "/api/rate/" },
             {"openorders", "/api/exchange/orders/opens" },
             {"transactions", "/api/exchange/orders/transactions" },
-            {"pagination", "/api/exchange/orders/transactions_pagination" }
+            {"pagination", "/api/exchange/orders/transactions_pagination" },
+            {"leveragePositions", "/api/exchange/leverage/positions" }
         };
 
         private string _key;
@@ -176,6 +177,15 @@ namespace Coincheck
             string cancelOrder = await Sender.SendAsync(http, pathId, _key, _secret, "DELETE");
 
             return cancelOrder;
+        }
+
+        async public Task<string> checkLeveragePositions()
+        {
+            Uri path = new Uri(paths["leveragePositions"], UriKind.Relative);
+
+            string checkResult = await Sender.SendAsync(http, path, _key, _secret, "GET");
+
+            return checkResult;
         }
 
     }
