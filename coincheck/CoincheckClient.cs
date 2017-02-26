@@ -35,7 +35,8 @@ namespace Coincheck
             {"transactions", "/api/exchange/orders/transactions" },
             {"pagination", "/api/exchange/orders/transactions_pagination" },
             {"leveragePositions", "/api/exchange/leverage/positions" },
-            {"leverageBalance", "/api/accounts/leverage_balance" }
+            {"leverageBalance", "/api/accounts/leverage_balance" },
+            {"account", "/api/accounts" }
         };
 
         private string _key;
@@ -196,6 +197,13 @@ namespace Coincheck
 
             return checkResult;
 
+        }
+
+        async public Task<string> getAccountInfo()
+        {
+            Uri path = new Uri(paths["account"], UriKind.Relative);
+            string info = await Sender.SendAsync(http, path, _key, _secret, "GET");
+            return info;
         }
 
     }
