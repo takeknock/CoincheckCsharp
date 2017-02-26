@@ -36,7 +36,8 @@ namespace Coincheck
             {"pagination", "/api/exchange/orders/transactions_pagination" },
             {"leveragePositions", "/api/exchange/leverage/positions" },
             {"leverageBalance", "/api/accounts/leverage_balance" },
-            {"account", "/api/accounts" }
+            {"account", "/api/accounts" },
+            {"send", "/api/send_money" }
         };
 
         private string _key;
@@ -205,6 +206,24 @@ namespace Coincheck
             string info = await Sender.SendAsync(http, path, _key, _secret, "GET");
             return info;
         }
+
+
+        //async public Task<string> sendBitcoin(
+        //    string targetAddress, double amount, double fee = 0.0)
+        //{
+        //    Uri path = new Uri(paths["send"], UriKind.Relative);
+        //    Dictionary<string, string> param = new Dictionary<string, string>()
+        //    {
+        //        {"address", targetAddress },
+        //        {"amount", amount.ToString() },
+        //        {"fee", fee.ToString() }
+        //    };
+        //    string sendResult = 
+        //        await Sender.SendAsync(http, path, _key, _secret, "POST", param);
+
+        //    return sendResult;
+
+        //}
 
     }
 }
