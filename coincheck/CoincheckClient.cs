@@ -208,7 +208,7 @@ namespace Coincheck
         }
 
 
-        //async public Task<string> sendBitcoin(
+        //async public Task<string> sendMoney(
         //    string targetAddress, double amount, double fee = 0.0)
         //{
         //    Uri path = new Uri(paths["send"], UriKind.Relative);
@@ -224,6 +224,20 @@ namespace Coincheck
         //    return sendResult;
 
         //}
+
+        //async public Task<string> getSendHistory(string currency = "btc_jpy")
+        //{
+        //    Uri path = new Uri(paths["send"], UriKind.Relative);
+        //    Dictionary<string, string> param = new Dictionary<string, string>()
+        //    {
+        //        {"currency", currency }
+        //    };
+        //    string sendHistory =
+        //        await Sender.SendAsync(http, path, _key, _secret, "GET", param);
+        //    return sendHistory;
+        //}
+
+
 
     }
 }
