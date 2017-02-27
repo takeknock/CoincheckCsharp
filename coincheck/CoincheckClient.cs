@@ -275,6 +275,20 @@ namespace Coincheck
             return info;
         }
 
+        // not tested
+        async public Task<string> sendBitcoin(string address, double amount)
+        {
+            Uri path = new Uri(paths["send"], UriKind.Relative);
+            Dictionary<string, string> param = new Dictionary<string, string>()
+            {
+                {"address", address },
+                {"amount", amount.ToString() }
+            };
+            string sendStatus = await Sender.SendAsync(http, path, _key, _secret, "POST", param);
+            return sendStatus;
+        }
+
+
 
     }
 }
