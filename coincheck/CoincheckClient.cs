@@ -349,5 +349,16 @@ namespace Coincheck
             return status;
         }
 
+        // error
+        async public Task<string> repay(string borrowingId)
+        {
+            Uri path = new Uri(paths["borrows"] + "/" + borrowingId + "/repay", UriKind.Relative);
+            Dictionary<string, string> param = new Dictionary<string, string>()
+            {
+                {"id", borrowingId }
+            };
+            string result = await Sender.SendAsync(http, path, _key, _secret, "POST", param);
+            return result;
+        }
     }
 }
