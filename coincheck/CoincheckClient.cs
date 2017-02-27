@@ -268,6 +268,13 @@ namespace Coincheck
             return result;
         }
 
+        async public Task<string> getBorrowInfo()
+        {
+            Uri path = new Uri(paths["borrowInfo"], UriKind.Relative);
+            string info = await Sender.SendAsync(http, path, _key, _secret, "GET");
+            return info;
+        }
+
 
     }
 }
