@@ -40,7 +40,8 @@ namespace Coincheck
             {"send", "/api/send_money" },
             {"deposit", "/api/deposit_money" },
             {"bankAccount", "/api/bank_accounts" },
-            {"borrows","/api/lending/borrows" }
+            {"borrows","/api/lending/borrows" },
+            {"borrowInfo", "/api/lending/borrows/matches" }
         };
 
         private string _key;
@@ -253,8 +254,8 @@ namespace Coincheck
             string info = await Sender.SendAsync(http, path, _key, _secret, "GET");
             return info;
         }
+        
 
-        // not tested
         async public Task<string> applyBorrowingMoney(double amount, string currency = "BTC")
         {
             Uri path = new Uri(paths["borrows"], UriKind.Relative);
@@ -263,7 +264,7 @@ namespace Coincheck
                 {"amount", amount.ToString() },
                 {"currency", currency }
             };
-            string result = await Sender.SendAsync(http, path, _key, _secret, "POST");
+            string result = await Sender.SendAsync(http, path, _key, _secret, "POST", param);
             return result;
         }
 
