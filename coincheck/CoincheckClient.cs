@@ -288,6 +288,21 @@ namespace Coincheck
             return sendStatus;
         }
 
+        async public Task<string> registBankAccount(
+            string bankName, string branchName, string accountType, string number, string resitedName)
+        {
+            Uri path = new Uri(paths["bankAccount"], UriKind.Relative);
+            Dictionary<string, string> param = new Dictionary<string, string>()
+            {
+                {"bank_name", bankName },
+                {"branch_name", branchName },
+                {"bank_account_type", accountType },
+                {"number", number },
+                {"name", resitedName }
+            };
+            string result = await Sender.SendAsync(http, path, _key, _secret, "POST", param);
+            return result;
+        }
 
 
     }
