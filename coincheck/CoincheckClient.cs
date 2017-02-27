@@ -42,7 +42,8 @@ namespace Coincheck
             {"bankAccount", "/api/bank_accounts" },
             {"borrows","/api/lending/borrows" },
             {"borrowInfo", "/api/lending/borrows/matches" },
-            {"withdraw", "/api/withdraws" }
+            {"withdraw", "/api/withdraws" },
+            {"toLeverage", "/api/exchange/transfers/to_leverage" }
         };
 
         private string _key;
@@ -353,12 +354,27 @@ namespace Coincheck
         async public Task<string> repay(string borrowingId)
         {
             Uri path = new Uri(paths["borrows"] + "/" + borrowingId + "/repay", UriKind.Relative);
-            Dictionary<string, string> param = new Dictionary<string, string>()
-            {
-                {"id", borrowingId }
-            };
-            string result = await Sender.SendAsync(http, path, _key, _secret, "POST", param);
+            //Dictionary<string, string> param = new Dictionary<string, string>()
+            //{
+            //    {"id", borrowingId }
+            //};
+            string result = await Sender.SendAsync(http, path, _key, _secret, "POST");
             return result;
         }
+
+        // error
+        async public Task<string> transferToLeverage(double amount, string currency = "JPY")
+        {
+            Uri path = new Uri(paths["toLeverage"], UriKind.Relative);
+            Dictionary<string, string> param = new Dictionary<string, string>()
+            {
+                {"currency", currency },
+                {"amount", amount.ToString()}
+            };
+            string status = await Sender.SendAsync(http, path, _key, _secret, "POST", param);
+            return status;
+        }
+
+
     }
 }
