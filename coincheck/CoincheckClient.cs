@@ -342,5 +342,12 @@ namespace Coincheck
 
         }
 
+        async public Task<string> cancelWithdraw(string withdrawId)
+        {
+            Uri path = new Uri(paths["withdraw"] + "/" + withdrawId, UriKind.Relative);
+            string status = await Sender.SendAsync(http, path, _key, _secret, "DELETE");
+            return status;
+        }
+
     }
 }
