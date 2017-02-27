@@ -43,7 +43,8 @@ namespace Coincheck
             {"borrows","/api/lending/borrows" },
             {"borrowInfo", "/api/lending/borrows/matches" },
             {"withdraw", "/api/withdraws" },
-            {"toLeverage", "/api/exchange/transfers/to_leverage" }
+            {"toLeverage", "/api/exchange/transfers/to_leverage" },
+            {"fromLeverage", "/api/exchange/transfers/from_leverage" }
         };
 
         private string _key;
@@ -373,6 +374,20 @@ namespace Coincheck
             };
             string status = await Sender.SendAsync(http, path, _key, _secret, "POST", param);
             return status;
+        }
+
+        // error Bad Request
+        async public Task<string> transferFromLeverage(double amount, string currency = "JPY")
+        {
+            Uri path = new Uri(paths["fromLeverage"], UriKind.Relative);
+            Dictionary<string, string> param = new Dictionary<string, string>()
+            {
+                {"currency", currency },
+                {"amount", amount.ToString()}
+            };
+            string status = await Sender.SendAsync(http, path, _key, _secret, "POST", param);
+            return status;
+
         }
 
 
