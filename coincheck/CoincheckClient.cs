@@ -319,5 +319,28 @@ namespace Coincheck
             return history;
         }
 
+        // error
+        async public Task<string> withdraw(string bankAccountId, double amount, string currency = "JPY", bool isFast = false)
+        {
+            Uri path = new Uri(paths["withdraw"], UriKind.Relative);
+            //Dictionary<string, string> param = new Dictionary<string, string>()
+            //{
+            //    {"bank_account_id", bankAccountId },
+            //    {"amount", amount.ToString() },
+            //    {"currency", currency },
+            //    {"is_fast", isFast.ToString() }
+            //};
+            Dictionary<string, string> param = new Dictionary<string, string>()
+            {
+                {"bank_account_id", bankAccountId },
+                {"amount", amount.ToString() },
+                {"currency", currency }
+            };
+
+            string status = await Sender.SendAsync(http, path, _key, _secret, "POST", param);
+            return status;
+
+        }
+
     }
 }
