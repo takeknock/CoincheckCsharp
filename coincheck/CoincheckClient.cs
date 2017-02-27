@@ -304,6 +304,12 @@ namespace Coincheck
             return result;
         }
 
+        async public Task<string> deleteBankAccount(string id)
+        {
+            Uri path = new Uri(paths["bankAccount"] + "/" + id, UriKind.Relative);
+            string status = await Sender.SendAsync(http, path, _key, _secret, "DELETE");
+            return status;
+        }
 
     }
 }
