@@ -229,7 +229,7 @@ namespace Coincheck
 
         //}
 
-        async public Task<string> getSendHistory(string currency = "btc_jpy")
+        async public Task<string> getSendHistory(string currency = "BTC")
         {
             string param = "?currency=" + currency;
             Uri path = new Uri(paths["send"] + param, UriKind.Relative);
@@ -256,7 +256,7 @@ namespace Coincheck
         }
         
 
-        async public Task<string> applyBorrowingMoney(double amount, string currency = "BTC")
+        async public Task<string> applyBorrowingMoney(double amount, string currency)
         {
             Uri path = new Uri(paths["borrows"], UriKind.Relative);
             Dictionary<string, string> param = new Dictionary<string, string>()
