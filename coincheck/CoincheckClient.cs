@@ -41,7 +41,8 @@ namespace Coincheck
             {"deposit", "/api/deposit_money" },
             {"bankAccount", "/api/bank_accounts" },
             {"borrows","/api/lending/borrows" },
-            {"borrowInfo", "/api/lending/borrows/matches" }
+            {"borrowInfo", "/api/lending/borrows/matches" },
+            {"withdraw", "/api/withdraws" }
         };
 
         private string _key;
@@ -309,6 +310,13 @@ namespace Coincheck
             Uri path = new Uri(paths["bankAccount"] + "/" + id, UriKind.Relative);
             string status = await Sender.SendAsync(http, path, _key, _secret, "DELETE");
             return status;
+        }
+
+        async public Task<string> getWithdrawHistory()
+        {
+            Uri path = new Uri(paths["withdraw"], UriKind.Relative);
+            string history = await Sender.SendAsync(http, path, _key, _secret, "GET");
+            return history;
         }
 
     }
