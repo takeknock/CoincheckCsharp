@@ -33,7 +33,18 @@ namespace Coincheck
             {"fxRates", "/api/rate/" },
             {"openorders", "/api/exchange/orders/opens" },
             {"transactions", "/api/exchange/orders/transactions" },
-            {"pagination", "/api/exchange/orders/transactions_pagination" }
+            {"pagination", "/api/exchange/orders/transactions_pagination" },
+            {"leveragePositions", "/api/exchange/leverage/positions" },
+            {"leverageBalance", "/api/accounts/leverage_balance" },
+            {"account", "/api/accounts" },
+            {"send", "/api/send_money" },
+            {"deposit", "/api/deposit_money" },
+            {"bankAccount", "/api/bank_accounts" },
+            {"borrows","/api/lending/borrows" },
+            {"borrowInfo", "/api/lending/borrows/matches" },
+            {"withdraw", "/api/withdraws" },
+            {"toLeverage", "/api/exchange/transfers/to_leverage" },
+            {"fromLeverage", "/api/exchange/transfers/from_leverage" }
         };
 
         private string _key;
@@ -177,6 +188,208 @@ namespace Coincheck
 
             return cancelOrder;
         }
+
+        async public Task<string> checkLeveragePositions()
+        {
+            Uri path = new Uri(paths["leveragePositions"], UriKind.Relative);
+
+            string checkResult = await Sender.SendAsync(http, path, _key, _secret, "GET");
+
+            return checkResult;
+        }
+
+        async public Task<string> checkLeverageBalance()
+        {
+            Uri path = new Uri(paths["leverageBalance"], UriKind.Relative);
+            string checkResult = await Sender.SendAsync(http, path, _key, _secret, "GET");
+
+            return checkResult;
+
+        }
+
+        async public Task<string> getAccountInfo()
+        {
+            Uri path = new Uri(paths["account"], UriKind.Relative);
+            string info = await Sender.SendAsync(http, path, _key, _secret, "GET");
+            return info;
+        }
+
+
+        //async public Task<string> sendMoney(
+        //    string targetAddress, double amount, double fee = 0.0)
+        //{
+        //    Uri path = new Uri(paths["send"], UriKind.Relative);
+        //    Dictionary<string, string> param = new Dictionary<string, string>()
+        //    {
+        //        {"address", targetAddress },
+        //        {"amount", amount.ToString() },
+        //        {"fee", fee.ToString() }
+        //    };
+        //    string sendResult = 
+        //        await Sender.SendAsync(http, path, _key, _secret, "POST", param);
+
+        //    return sendResult;
+
+        //}
+
+        async public Task<string> getSendHistory(string currency = "BTC")
+        {
+            string param = "?currency=" + currency;
+            Uri path = new Uri(paths["send"] + param, UriKind.Relative);
+
+            string sendHistory =
+                await Sender.SendAsync(http, path, _key, _secret, "GET");
+            return sendHistory;
+        }
+
+        async public Task<string> getDepositHistory(string currency = "btc_jpy")
+        {
+            string param = "?currency=" + currency;
+            Uri path = new Uri(paths["deposit"] + param, UriKind.Relative);
+
+            string history = await Sender.SendAsync(http, path, _key, _secret, "GET");
+            return history;
+        }
+
+        async public Task<string> getBankAccountInfo()
+        {
+            Uri path = new Uri(paths["bankAccount"], UriKind.Relative);
+            string info = await Sender.SendAsync(http, path, _key, _secret, "GET");
+            return info;
+        }
+        
+
+        async public Task<string> applyBorrowingMoney(double amount, string currency)
+        {
+            Uri path = new Uri(paths["borrows"], UriKind.Relative);
+            Dictionary<string, string> param = new Dictionary<string, string>()
+            {
+                {"amount", amount.ToString() },
+                {"currency", currency }
+            };
+            string result = await Sender.SendAsync(http, path, _key, _secret, "POST", param);
+            return result;
+        }
+
+        async public Task<string> getBorrowInfo()
+        {
+            Uri path = new Uri(paths["borrowInfo"], UriKind.Relative);
+            string info = await Sender.SendAsync(http, path, _key, _secret, "GET");
+            return info;
+        }
+
+        // not tested
+        async public Task<string> sendBitcoin(string address, double amount)
+        {
+            Uri path = new Uri(paths["send"], UriKind.Relative);
+            Dictionary<string, string> param = new Dictionary<string, string>()
+            {
+                {"address", address },
+                {"amount", amount.ToString() }
+            };
+            string sendStatus = await Sender.SendAsync(http, path, _key, _secret, "POST", param);
+            return sendStatus;
+        }
+
+        async public Task<string> registBankAccount(
+            string bankName, string branchName, string accountType, string number, string resitedName)
+        {
+            Uri path = new Uri(paths["bankAccount"], UriKind.Relative);
+            Dictionary<string, string> param = new Dictionary<string, string>()
+            {
+                {"bank_name", bankName },
+                {"branch_name", branchName },
+                {"bank_account_type", accountType },
+                {"number", number },
+                {"name", resitedName }
+            };
+            string result = await Sender.SendAsync(http, path, _key, _secret, "POST", param);
+            return result;
+        }
+
+        async public Task<string> deleteBankAccount(string id)
+        {
+            Uri path = new Uri(paths["bankAccount"] + "/" + id, UriKind.Relative);
+            string status = await Sender.SendAsync(http, path, _key, _secret, "DELETE");
+            return status;
+        }
+
+        async public Task<string> getWithdrawHistory()
+        {
+            Uri path = new Uri(paths["withdraw"], UriKind.Relative);
+            string history = await Sender.SendAsync(http, path, _key, _secret, "GET");
+            return history;
+        }
+
+        // error
+        async public Task<string> withdraw(string bankAccountId, double amount, string currency = "JPY", bool isFast = false)
+        {
+            Uri path = new Uri(paths["withdraw"], UriKind.Relative);
+            //Dictionary<string, string> param = new Dictionary<string, string>()
+            //{
+            //    {"bank_account_id", bankAccountId },
+            //    {"amount", amount.ToString() },
+            //    {"currency", currency },
+            //    {"is_fast", isFast.ToString() }
+            //};
+            Dictionary<string, string> param = new Dictionary<string, string>()
+            {
+                {"bank_account_id", bankAccountId },
+                {"amount", amount.ToString() },
+                {"currency", currency }
+            };
+
+            string status = await Sender.SendAsync(http, path, _key, _secret, "POST", param);
+            return status;
+
+        }
+
+        async public Task<string> cancelWithdraw(string withdrawId)
+        {
+            Uri path = new Uri(paths["withdraw"] + "/" + withdrawId, UriKind.Relative);
+            string status = await Sender.SendAsync(http, path, _key, _secret, "DELETE");
+            return status;
+        }
+
+        // error
+        async public Task<string> repay(string borrowingId)
+        {
+            Uri path = new Uri(paths["borrows"] + "/" + borrowingId + "/repay", UriKind.Relative);
+            //Dictionary<string, string> param = new Dictionary<string, string>()
+            //{
+            //    {"id", borrowingId }
+            //};
+            string result = await Sender.SendAsync(http, path, _key, _secret, "POST");
+            return result;
+        }
+
+        // error
+        async public Task<string> transferToLeverage(double amount, string currency = "JPY")
+        {
+            Uri path = new Uri(paths["toLeverage"], UriKind.Relative);
+            Dictionary<string, string> param = new Dictionary<string, string>()
+            {
+                {"currency", currency },
+                {"amount", amount.ToString()}
+            };
+            string status = await Sender.SendAsync(http, path, _key, _secret, "POST", param);
+            return status;
+        }
+
+        // error Bad Request
+        async public Task<string> transferFromLeverage(double amount, string currency = "JPY")
+        {
+            Uri path = new Uri(paths["fromLeverage"], UriKind.Relative);
+            Dictionary<string, string> param = new Dictionary<string, string>()
+            {
+                {"currency", currency },
+                {"amount", amount.ToString()}
+            };
+            string status = await Sender.SendAsync(http, path, _key, _secret, "POST", param);
+            return status;
+
+        }
+
 
     }
 }
