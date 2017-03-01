@@ -18,7 +18,6 @@ namespace Coincheck
 { 
     public class CoincheckClient
     {
-        private string _target = "https://coincheck.com";
         private Sender sender = new Sender();
         private HttpClient http = new HttpClient();
         private List<string> _gettablePair = new List<string>() { "btc_jpy", "eth_jpy", "etc_jpy", "dao_jpy", "lsk_jpy", "fct_jpy", "xmr_jpy", "rep_jpy", "xrp_jpy", "zec_jpy", "eth_btc", "etc_btc", "lsk_btc", "fct_btc", "xmr_btc", "rep_btc", "xrp_btc", "zec_btc" };
@@ -158,10 +157,7 @@ namespace Coincheck
 
         async public Task<string> getOwnTransactionPaginationAsync()
         {
-            HttpClient http = new HttpClient();
-            http.BaseAddress = new Uri(_target);
-            Uri path = 
-                new Uri(paths["pagination"], UriKind.Relative);
+            Uri path = new Uri(paths["pagination"], UriKind.Relative);
 
             string method = "GET";
 
