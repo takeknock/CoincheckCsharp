@@ -56,6 +56,11 @@ namespace Coincheck
             http.BaseAddress = new Uri("https://coincheck.com");
         }
 
+        public CoincheckClient(Sender argSender)
+        {
+            sender = argSender;
+        }
+
         public CoincheckClient(string key, string secret)
         {
             _key = key;
