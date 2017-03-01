@@ -125,6 +125,8 @@ namespace Coincheck
         
         async public Task<string> createOrderAsync(string orderType, double rate, double amount, string pair)
         {
+            if (pair != "btc_jpy")
+                throw new NotSupportedException(pair + " is not supported.");
 
             Uri path = new Uri(paths["orders"], UriKind.Relative);
 
