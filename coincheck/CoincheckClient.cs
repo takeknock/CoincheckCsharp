@@ -19,6 +19,7 @@ namespace Coincheck
     public class CoincheckClient
     {
         private string _target = "https://coincheck.com";
+        private Sender sender = new Sender();
         private HttpClient http = new HttpClient();
         private List<string> _gettablePair = new List<string>() { "btc_jpy", "eth_jpy", "etc_jpy", "dao_jpy", "lsk_jpy", "fct_jpy", "xmr_jpy", "rep_jpy", "xrp_jpy", "zec_jpy", "eth_btc", "etc_btc", "lsk_btc", "fct_btc", "xmr_btc", "rep_btc", "xrp_btc", "zec_btc" };
 
@@ -66,7 +67,7 @@ namespace Coincheck
         async public Task<string> getTickerAsync()
         {
             Uri path = new Uri(paths["ticker"], UriKind.Relative);
-            string response = await Sender.SendAsync(http, path, _key, _secret, "GET");
+            string response = await sender.SendAsync(http, path, _key, _secret, "GET");
             
             return response;
         }       
@@ -74,14 +75,14 @@ namespace Coincheck
         async public Task<string> getTradesAsync()
         {
             Uri path = new Uri(paths["trades"], UriKind.Relative);
-            string response = await Sender.SendAsync(http, path, _key, _secret, "GET");
+            string response = await sender.SendAsync(http, path, _key, _secret, "GET");
             return response;
         }
 
         async public Task<string> getOrderbookAsync()
         {
             Uri path = new Uri(paths["orderbook"], UriKind.Relative);
-            string response = await Sender.SendAsync(http, path, _key, _secret, "GET");
+            string response = await sender.SendAsync(http, path, _key, _secret, "GET");
 
             return response;
         }
@@ -103,7 +104,7 @@ namespace Coincheck
                     {"order_type", order },
                     {"pair", pair }
                 };
-            string response = await Sender.SendAsync(http, path, _key, _secret, "GET", parameters);
+            string response = await sender.SendAsync(http, path, _key, _secret, "GET", parameters);
 
             return response;
         }
@@ -118,7 +119,7 @@ namespace Coincheck
             string fxRateTarget = paths["fxRates"] + pair;
             Uri path = new Uri(fxRateTarget, UriKind.Relative);
 
-            string response = await Sender.SendAsync(http, path, _key, _secret, "GET");
+            string response = await sender.SendAsync(http, path, _key, _secret, "GET");
 
             return response;
         }
@@ -137,7 +138,7 @@ namespace Coincheck
                 {"rate", rate.ToString() },
                 {"amount", amount.ToString() }
             };
-            string result = await Sender.SendAsync(http, path,_key, _secret, "POST", param);
+            string result = await sender.SendAsync(http, path,_key, _secret, "POST", param);
             return result;
         }
 
@@ -145,7 +146,7 @@ namespace Coincheck
         {   
             Uri path = new Uri(paths["assets"], UriKind.Relative);
 
-            string text = await Sender.SendAsync(http, path, _key, _secret, "GET");
+            string text = await sender.SendAsync(http, path, _key, _secret, "GET");
 
             return text;
         }
@@ -159,7 +160,7 @@ namespace Coincheck
 
             string method = "GET";
 
-            string json = await Sender.SendAsync(http, path, _key, _secret, method);
+            string json = await sender.SendAsync(http, path, _key, _secret, method);
             return json;
 
         }
@@ -169,14 +170,14 @@ namespace Coincheck
             Uri path = new Uri(paths["transactions"], UriKind.Relative);
             string method = "GET";
 
-            string json = await Sender.SendAsync(http, path, _key, _secret, method);
+            string json = await sender.SendAsync(http, path, _key, _secret, method);
             return json;
         }
 
         async public Task<string> getOpenordersAsync()
         {
             Uri path = new Uri(paths["openorders"], UriKind.Relative);
-            string orders = await Sender.SendAsync(http, path, _key, _secret, "GET");
+            string orders = await sender.SendAsync(http, path, _key, _secret, "GET");
 
             return orders;
         }
@@ -186,7 +187,7 @@ namespace Coincheck
             string pId = paths["orders"] + "/" + orderId;
             Uri pathId = new Uri(pId, UriKind.Relative);
 
-            string cancelOrder = await Sender.SendAsync(http, pathId, _key, _secret, "DELETE");
+            string cancelOrder = await sender.SendAsync(http, pathId, _key, _secret, "DELETE");
 
             return cancelOrder;
         }
@@ -195,7 +196,7 @@ namespace Coincheck
         {
             Uri path = new Uri(paths["leveragePositions"], UriKind.Relative);
 
-            string checkResult = await Sender.SendAsync(http, path, _key, _secret, "GET");
+            string checkResult = await sender.SendAsync(http, path, _key, _secret, "GET");
 
             return checkResult;
         }
@@ -203,7 +204,7 @@ namespace Coincheck
         async public Task<string> checkLeverageBalance()
         {
             Uri path = new Uri(paths["leverageBalance"], UriKind.Relative);
-            string checkResult = await Sender.SendAsync(http, path, _key, _secret, "GET");
+            string checkResult = await sender.SendAsync(http, path, _key, _secret, "GET");
 
             return checkResult;
 
@@ -212,7 +213,7 @@ namespace Coincheck
         async public Task<string> getAccountInfo()
         {
             Uri path = new Uri(paths["account"], UriKind.Relative);
-            string info = await Sender.SendAsync(http, path, _key, _secret, "GET");
+            string info = await sender.SendAsync(http, path, _key, _secret, "GET");
             return info;
         }
 
@@ -228,7 +229,7 @@ namespace Coincheck
         //        {"fee", fee.ToString() }
         //    };
         //    string sendResult = 
-        //        await Sender.SendAsync(http, path, _key, _secret, "POST", param);
+        //        await sender.SendAsync(http, path, _key, _secret, "POST", param);
 
         //    return sendResult;
 
@@ -240,7 +241,7 @@ namespace Coincheck
             Uri path = new Uri(paths["send"] + param, UriKind.Relative);
 
             string sendHistory =
-                await Sender.SendAsync(http, path, _key, _secret, "GET");
+                await sender.SendAsync(http, path, _key, _secret, "GET");
             return sendHistory;
         }
 
@@ -249,14 +250,14 @@ namespace Coincheck
             string param = "?currency=" + currency;
             Uri path = new Uri(paths["deposit"] + param, UriKind.Relative);
 
-            string history = await Sender.SendAsync(http, path, _key, _secret, "GET");
+            string history = await sender.SendAsync(http, path, _key, _secret, "GET");
             return history;
         }
 
         async public Task<string> getBankAccountInfo()
         {
             Uri path = new Uri(paths["bankAccount"], UriKind.Relative);
-            string info = await Sender.SendAsync(http, path, _key, _secret, "GET");
+            string info = await sender.SendAsync(http, path, _key, _secret, "GET");
             return info;
         }
         
@@ -269,14 +270,14 @@ namespace Coincheck
                 {"amount", amount.ToString() },
                 {"currency", currency }
             };
-            string result = await Sender.SendAsync(http, path, _key, _secret, "POST", param);
+            string result = await sender.SendAsync(http, path, _key, _secret, "POST", param);
             return result;
         }
 
         async public Task<string> getBorrowInfo()
         {
             Uri path = new Uri(paths["borrowInfo"], UriKind.Relative);
-            string info = await Sender.SendAsync(http, path, _key, _secret, "GET");
+            string info = await sender.SendAsync(http, path, _key, _secret, "GET");
             return info;
         }
 
@@ -289,7 +290,7 @@ namespace Coincheck
                 {"address", address },
                 {"amount", amount.ToString() }
             };
-            string sendStatus = await Sender.SendAsync(http, path, _key, _secret, "POST", param);
+            string sendStatus = await sender.SendAsync(http, path, _key, _secret, "POST", param);
             return sendStatus;
         }
 
@@ -305,21 +306,21 @@ namespace Coincheck
                 {"number", number },
                 {"name", resitedName }
             };
-            string result = await Sender.SendAsync(http, path, _key, _secret, "POST", param);
+            string result = await sender.SendAsync(http, path, _key, _secret, "POST", param);
             return result;
         }
 
         async public Task<string> deleteBankAccount(string id)
         {
             Uri path = new Uri(paths["bankAccount"] + "/" + id, UriKind.Relative);
-            string status = await Sender.SendAsync(http, path, _key, _secret, "DELETE");
+            string status = await sender.SendAsync(http, path, _key, _secret, "DELETE");
             return status;
         }
 
         async public Task<string> getWithdrawHistory()
         {
             Uri path = new Uri(paths["withdraw"], UriKind.Relative);
-            string history = await Sender.SendAsync(http, path, _key, _secret, "GET");
+            string history = await sender.SendAsync(http, path, _key, _secret, "GET");
             return history;
         }
 
@@ -341,7 +342,7 @@ namespace Coincheck
                 {"currency", currency }
             };
 
-            string status = await Sender.SendAsync(http, path, _key, _secret, "POST", param);
+            string status = await sender.SendAsync(http, path, _key, _secret, "POST", param);
             return status;
 
         }
@@ -349,7 +350,7 @@ namespace Coincheck
         async public Task<string> cancelWithdraw(string withdrawId)
         {
             Uri path = new Uri(paths["withdraw"] + "/" + withdrawId, UriKind.Relative);
-            string status = await Sender.SendAsync(http, path, _key, _secret, "DELETE");
+            string status = await sender.SendAsync(http, path, _key, _secret, "DELETE");
             return status;
         }
 
@@ -361,7 +362,7 @@ namespace Coincheck
             //{
             //    {"id", borrowingId }
             //};
-            string result = await Sender.SendAsync(http, path, _key, _secret, "POST");
+            string result = await sender.SendAsync(http, path, _key, _secret, "POST");
             return result;
         }
 
@@ -374,7 +375,7 @@ namespace Coincheck
                 {"currency", currency },
                 {"amount", amount.ToString()}
             };
-            string status = await Sender.SendAsync(http, path, _key, _secret, "POST", param);
+            string status = await sender.SendAsync(http, path, _key, _secret, "POST", param);
             return status;
         }
 
@@ -387,7 +388,7 @@ namespace Coincheck
                 {"currency", currency },
                 {"amount", amount.ToString()}
             };
-            string status = await Sender.SendAsync(http, path, _key, _secret, "POST", param);
+            string status = await sender.SendAsync(http, path, _key, _secret, "POST", param);
             return status;
 
         }

@@ -8,10 +8,10 @@ using System.Security.Cryptography;
 
 namespace Coincheck
 {
-    static class Sender
+    class Sender
     {
 
-        static internal async Task<string> SendAsync(HttpClient http, Uri path, string apiKey, string secret, string method, Dictionary<string, string> parameters = null)
+        internal async Task<string> SendAsync(HttpClient http, Uri path, string apiKey, string secret, string method, Dictionary<string, string> parameters = null)
         {
             if (parameters == null)
                 parameters = new Dictionary<string, string>();
@@ -28,6 +28,7 @@ namespace Coincheck
             setHttpHeaders(ref http, apiKey, nonce, sign);
 
             HttpResponseMessage responce;
+
             switch (method)
             {
                 case "POST":
@@ -40,7 +41,7 @@ namespace Coincheck
                     responce = await http.DeleteAsync(path);
                     break;
                 default:
-                    throw new ArgumentException("You should choose POST or GET as method.", method);
+                    throw new ArgumentException("You should choose POST, GET or DELETE as a method.", method);
             }
             responce.EnsureSuccessStatusCode();
 
@@ -49,26 +50,25 @@ namespace Coincheck
             return text;
         }
 
-        static private string makeMessage(string nonce, string uri, string param)
+        private string makeMessage(string nonce, string uri, string param)
         {
             return nonce + uri + param;
         }
 
-        static private string generateSignature(string secret, string message)
+        private string generateSignature(string secret, string message)
         {
             byte[] hash = new HMACSHA256(Encoding.UTF8.GetBytes(secret)).ComputeHash(Encoding.UTF8.GetBytes(message));
             string signature = BitConverter.ToString(hash).ToLower().Replace("-", "");
             return signature;
         }
 
-        static private void setHttpHeaders(ref HttpClient http,
+        private void setHttpHeaders(ref HttpClient http,
             string apiKey, string nonce, string sign)
         {
             http.DefaultRequestHeaders.Clear();
             http.DefaultRequestHeaders.Add("ACCESS-KEY", apiKey);
             http.DefaultRequestHeaders.Add("ACCESS-NONCE", nonce);
             http.DefaultRequestHeaders.Add("ACCESS-SIGNATURE", sign);
-
         }
 
     }
