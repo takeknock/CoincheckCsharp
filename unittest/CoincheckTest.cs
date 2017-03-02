@@ -18,6 +18,7 @@ namespace unittest
         {
             string apiKey = "key";
             string secretKey = "secret";
+            ISender sender = new MockSender();
             client = new CoincheckClient(apiKey, secretKey);
         }
         
