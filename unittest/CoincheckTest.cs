@@ -11,7 +11,16 @@ namespace unittest
     [TestFixture]
     class CoincheckTest
     {
-        private CoincheckClient client = new CoincheckClient();
+        private CoincheckClient client;
+
+        [SetUp]
+        public void Init()
+        {
+            string apiKey = "key";
+            string secretKey = "secret";
+            client = new CoincheckClient(apiKey, secretKey);
+        }
+        
         [Test]
         public void testGetTicker()
         {
@@ -82,6 +91,12 @@ namespace unittest
         {
             //var actual = client.getOutstandingOrders();
             //Console.WriteLine(actual);
+        }
+
+        [TearDown]
+        public void Dispose()
+        {
+
         }
         
 
