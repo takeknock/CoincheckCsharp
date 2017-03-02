@@ -8,10 +8,10 @@ using System.Security.Cryptography;
 
 namespace Coincheck
 {
-    public class Sender
+    public class Sender : ISender
     {
 
-        internal async Task<string> SendAsync(HttpClient http, Uri path, string apiKey, string secret, string method, Dictionary<string, string> parameters = null)
+        public async Task<string> SendAsync(HttpClient http, Uri path, string apiKey, string secret, string method, Dictionary<string, string> parameters = null)
         {
             if (parameters == null)
                 parameters = new Dictionary<string, string>();
