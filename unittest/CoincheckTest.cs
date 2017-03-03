@@ -19,15 +19,14 @@ namespace unittest
             string apiKey = "key";
             string secretKey = "secret";
             ISender sender = new MockSender();
-            client = new CoincheckClient(apiKey, secretKey);
+            client = new CoincheckClient(apiKey, secretKey, sender);
         }
         
         [Test]
         public void testGetTicker()
         {
             Task<string> ticker = client.getTickerAsync();
-            Assert.AreNotEqual(ticker.Result, "");
-            
+            Assert.AreNotEqual(ticker.ToString(), "keysecrethttp://coincheck.com/api/tickerGET");
         }
 
         [Test]
