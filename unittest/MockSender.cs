@@ -18,13 +18,23 @@ namespace unittest
 
         public async Task<string> SendAsync(HttpClient http, Uri path, string apiKey, string secret, string method, Dictionary<string, string> parameters = null)
         {
+            clear();
             this._key = apiKey;
             this._secret = secret;
             this._http = http;
             this._method = method;
             this._param = parameters;
 
-            return "success";
+            return _key + _secret + _http.BaseAddress.ToString() + path.ToString() + method;
+        }
+
+        private void clear()
+        {
+            _key = null;
+            _secret = null;
+            _http = null;
+            _method = null;
+            _param = null;
         }
 
     }
