@@ -26,15 +26,14 @@ namespace unittest
         public void testGetTicker()
         {
             Task<string> ticker = client.getTickerAsync();
-            Assert.AreNotEqual(ticker.ToString(), "keysecrethttp://coincheck.com/api/tickerGET");
+            Assert.AreEqual(ticker.Result.ToString(), "keysecrethttps://coincheck.com//api/tickerGET");
         }
 
         [Test]
         public void testGetTrade()
         {
             Task<string> trades = client.getTradesAsync();
-            //Console.WriteLine(trades);
-            Assert.AreNotEqual(trades, "");
+            Assert.AreEqual(trades.Result.ToString(), "keysecrethttps://coincheck.com//api/tradesGET");
         }
 
         [Test]
