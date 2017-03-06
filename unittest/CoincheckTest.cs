@@ -62,11 +62,13 @@ namespace unittest
             string correctPair = "btc_jpy";
             string notSupportedPair = "ttt_ttt";
             Task<string> fxRate = client.getFxRateAsync(correctPair);
-            Assert.AreNotEqual(fxRate, "");
+            Console.WriteLine(fxRate.Result.ToString());
+            Assert.AreEqual("keysecrethttps://coincheck.com//api/rate/btc_jpyGET", fxRate.Result.ToString());
 
+            Task<string> except = client.getFxRateAsync(notSupportedPair);
             Assert.That(() =>
-                client.getFxRateAsync(notSupportedPair), Throws.Exception.TypeOf<NotSupportedException>());
-           
+                except.Result.ToString(), Throws.Exception.TypeOf<AggregateException>());
+
         }
 
         [Test]
