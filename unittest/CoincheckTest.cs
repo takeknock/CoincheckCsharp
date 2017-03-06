@@ -74,6 +74,7 @@ namespace unittest
         [Test]
         public void testConstructorWithArg()
         {
+
             // want to test constructor with args
             // WebClientを外だしして外から与えるようにして、依存性を外す
             // 外だしすることで、モックオブジェクトを使用してテストが可能になる
@@ -85,7 +86,9 @@ namespace unittest
         {
             
             string orderType = "buy";
-
+            Task<string> actual = client.createOrderAsync(orderType, 10000.0, 0.5, "btc_jpy");
+            Console.WriteLine(actual.Result.ToString());
+            Assert.AreEqual("keysecrethttps://coincheck.com//api/exchange/ordersPOST", actual.Result.ToString());
 
         }
 
@@ -99,7 +102,6 @@ namespace unittest
         [TearDown]
         public void Dispose()
         {
-
         }
         
 
