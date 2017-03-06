@@ -26,14 +26,14 @@ namespace unittest
         public void testGetTicker()
         {
             Task<string> ticker = client.getTickerAsync();
-            Assert.AreEqual(ticker.Result.ToString(), "keysecrethttps://coincheck.com//api/tickerGET");
+            Assert.AreEqual("keysecrethttps://coincheck.com//api/tickerGET", ticker.Result.ToString());
         }
 
         [Test]
         public void testGetTrade()
         {
             Task<string> trades = client.getTradesAsync();
-            Assert.AreEqual(trades.Result.ToString(), "keysecrethttps://coincheck.com//api/tradesGET");
+            Assert.AreEqual("keysecrethttps://coincheck.com//api/tradesGET", trades.Result.ToString());
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace unittest
         {
             Task<string> orderBook = client.getOrderbookAsync();
             Console.WriteLine(orderBook.Result.ToString());
-            Assert.AreEqual(orderBook.Result.ToString(), "keysecrethttps://coincheck.com//api/order_booksGET");
+            Assert.AreEqual("keysecrethttps://coincheck.com//api/order_booksGET", orderBook.Result.ToString());
         }
 
         [Test]
@@ -54,7 +54,7 @@ namespace unittest
             Task<string> response = client.getExchangeRateAsync(order, pair, amount, price);
             Console.WriteLine(response.Result.ToString());
             string expected = "keysecrethttps://coincheck.com//api/exchange/orders/rateGET";
-            Assert.AreEqual(response.Result.ToString(), expected);
+            Assert.AreEqual(expected, response.Result.ToString());
         }
         [Test]
         public void testGetFxRate()
