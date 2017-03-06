@@ -40,19 +40,21 @@ namespace unittest
         public void testGetOrderbooks()
         {
             Task<string> orderBook = client.getOrderbookAsync();
-            //Console.WriteLine(orderBook);
-            Assert.AreNotEqual(orderBook, "");
+            Console.WriteLine(orderBook.Result.ToString());
+            Assert.AreEqual(orderBook.Result.ToString(), "keysecrethttps://coincheck.com//api/order_booksGET");
         }
 
         [Test]
         public void testGetExchangeRate()
         {
-            //string order = "buy";
-            //string pair = "btc_jpy";
-            //double amount = 10;
-            //double price = 85000;
-            //string response = client.getExchangeRate(order, pair, amount, price);
-            //Console.WriteLine(response);
+            string order = "buy";
+            string pair = "btc_jpy";
+            double amount = 10;
+            double price = 85000;
+            Task<string> response = client.getExchangeRateAsync(order, pair, amount, price);
+            Console.WriteLine(response.Result.ToString());
+            string expected = "keysecrethttps://coincheck.com//api/exchange/orders/rateGET";
+            Assert.AreEqual(response.Result.ToString(), expected);
         }
         [Test]
         public void testGetFxRate()
