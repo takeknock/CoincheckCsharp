@@ -100,7 +100,7 @@ namespace Coincheck
             return response;
         }
         
-        async public Task<string> getExchangeRateAsync(string order, string pair, double amount, int price)
+        async public Task<string> getExchangeRateAsync(string order, string pair, double amount, double price)
         {
             Uri path = new Uri(paths["orderrate"], UriKind.Relative);
             //Dictionary<string, string> parameters =
