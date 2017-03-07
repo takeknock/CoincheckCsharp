@@ -93,11 +93,144 @@ namespace unittest
         }
 
         [Test]
-        public void testGetOutstandingOrder()
+        public void testcreateOrderAsync()
         {
             //var actual = client.getOutstandingOrders();
             //Console.WriteLine(actual);
         }
+        [Test]
+        public void testgetOutstandingOrdersAsync()
+        {
+            //var actual = client.getOutstandingOrders();
+            //Console.WriteLine(actual);
+        }
+        [Test]
+        public void testgetOwnTransactionPaginationAsync()
+        {
+            //var actual = client.getOutstandingOrders();
+            //Console.WriteLine(actual);
+        }
+        [Test]
+        public void testgetOwnTransactionAsync()
+        {
+            //var actual = client.getOutstandingOrders();
+            //Console.WriteLine(actual);
+        }
+        [Test]
+        public void testgetOpenordersAsync()
+        {
+            //var actual = client.getOutstandingOrders();
+            //Console.WriteLine(actual);
+        }
+        [Test]
+        public void testcancelOrder()
+        {
+            //var actual = client.getOutstandingOrders();
+            //Console.WriteLine(actual);
+        }
+        [Test]
+        public void testcheckLeveragePositions()
+        {
+            //var actual = client.getOutstandingOrders();
+            //Console.WriteLine(actual);
+        }
+        [Test]
+        public void testcheckLeverageBalance()
+        {
+            //var actual = client.getOutstandingOrders();
+            //Console.WriteLine(actual);
+        }
+        [Test]
+        public void testgetAccountInfo()
+        {
+            //var actual = client.getOutstandingOrders();
+            //Console.WriteLine(actual);
+        }
+        [Test]
+        public void testgetSendHistory()
+        {
+            //var actual = client.getOutstandingOrders();
+            //Console.WriteLine(actual);
+        }
+        [Test]
+        public void testgetDepositHistory()
+        {
+            //var actual = client.getOutstandingOrders();
+            //Console.WriteLine(actual);
+        }
+        [Test]
+        public void testgetBankAccountInfo()
+        {
+            //var actual = client.getOutstandingOrders();
+            //Console.WriteLine(actual);
+        }
+        [Test]
+        public void testapplyBorrowingMoney()
+        {
+            //var actual = client.getOutstandingOrders();
+            //Console.WriteLine(actual);
+        }
+        [Test]
+        public void testgetBorrowInfo()
+        {
+            //var actual = client.getOutstandingOrders();
+            //Console.WriteLine(actual);
+        }
+        [Test]
+        public void testsendBitcoin()
+        {
+            //var actual = client.getOutstandingOrders();
+            //Console.WriteLine(actual);
+        }
+        [Test]
+        public void testregistBankAccount()
+        {
+            //var actual = client.getOutstandingOrders();
+            //Console.WriteLine(actual);
+        }
+        [Test]
+        public void testdeleteBankAccount()
+        {
+            //var actual = client.getOutstandingOrders();
+            //Console.WriteLine(actual);
+        }
+        [Test]
+        public void testgetWithdrawHistory()
+        {
+            //var actual = client.getOutstandingOrders();
+            //Console.WriteLine(actual);
+        }
+        [Test]
+        public void testwithdraw()
+        {
+            //var actual = client.getOutstandingOrders();
+            //Console.WriteLine(actual);
+        }
+        [Test]
+        public void testcancelWithdraw()
+        {
+            //var actual = client.getOutstandingOrders();
+            //Console.WriteLine(actual);
+        }
+        [Test]
+        public void testrepay()
+        {
+            //var actual = client.getOutstandingOrders();
+            //Console.WriteLine(actual);
+        }
+        [Test]
+        public void testtransferToLeverage()
+        {
+            //var actual = client.getOutstandingOrders();
+            //Console.WriteLine(actual);
+        }
+        [Test]
+        public void testtransferFromLeverage()
+        {
+            //var actual = client.getOutstandingOrders();
+            //Console.WriteLine(actual);
+        }
+
 
         [TearDown]
         public void Dispose()
