@@ -364,7 +364,6 @@ namespace Coincheck
             return status;
         }
 
-        // error
         async public Task<string> repay(string borrowingId)
         {
             Uri path = new Uri(paths["borrows"] + "/" + borrowingId + "/repay", UriKind.Relative);
