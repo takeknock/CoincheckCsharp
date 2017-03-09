@@ -95,8 +95,10 @@ namespace unittest
         [Test]
         public void testcreateOrderAsync()
         {
-            //var actual = client.getOutstandingOrders();
-            //Console.WriteLine(actual);
+            string orderType = "buy";
+            Task<string> actual = client.createOrderAsync(orderType, 110000.0, 0.5, "btc_jpy");
+            Console.WriteLine(actual.Result.ToString());
+            Assert.AreEqual("keysecrethttps://coincheck.com//api/exchange/ordersPOST", actual.Result.ToString());
         }
         [Test]
         public void testgetOutstandingOrdersAsync()
