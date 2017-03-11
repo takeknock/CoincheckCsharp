@@ -84,12 +84,10 @@ namespace unittest
         [Test]
         public void testCreateOrder()
         {
-            
             string orderType = "buy";
             Task<string> actual = client.createOrderAsync(orderType, 10000.0, 0.5, "btc_jpy");
             Console.WriteLine(actual.Result.ToString());
             Assert.AreEqual("keysecrethttps://coincheck.com//api/exchange/ordersPOST", actual.Result.ToString());
-
         }
 
         [Test]
@@ -191,8 +189,12 @@ namespace unittest
         [Test]
         public void testapplyBorrowingMoneyAsync()
         {
-            //var actual = client.getOutstandingOrders();
-            //Console.WriteLine(actual);
+            double amount = 0.5;
+            string ccy = "BTC";
+            Task<string> actual = client.applyBorrowingMoneyAsync(amount, ccy);
+            Console.WriteLine(actual.Result.ToString());
+            string expected = "keysecrethttps://coincheck.com//api/lending/borrowsPOST";
+            Assert.AreEqual(expected, actual.Result.ToString());
         }
         [Test]
         public void testgetBorrowInfoAsync()
