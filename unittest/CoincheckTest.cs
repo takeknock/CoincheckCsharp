@@ -264,8 +264,11 @@ namespace unittest
         [Test]
         public void testrepayAsync()
         {
-            //var actual = client.getOutstandingOrders();
-            //Console.WriteLine(actual);
+            string borrowingId = "12345";
+            Task<string> actual = client.repay(borrowingId);
+            Console.WriteLine(actual.Result.ToString());
+            string expected = "keysecrethttps://coincheck.com//api/lending/borrows/12345/repayPOST";
+            Assert.AreEqual(expected, actual.Result.ToString());
         }
         [Test]
         public void testtransferToLeverageAsync()
