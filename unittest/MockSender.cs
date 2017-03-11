@@ -24,7 +24,7 @@ namespace unittest
             this._http = http;
             this._method = method;
             this._param = parameters;
-
+            //string paramStr = _param.Select(e => e.Key.Concat(e.Value));
             return _key + _secret + _http.BaseAddress.ToString() + path.ToString() + method;
         }
 
