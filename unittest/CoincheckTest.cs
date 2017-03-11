@@ -177,14 +177,16 @@ namespace unittest
         {
             Task<string> actual = client.getDepositHistoryAsync();
             Console.WriteLine(actual.Result.ToString());
-            string expected = "";
+            string expected = "keysecrethttps://coincheck.com//api/deposit_money?currency=btc_jpyGET";
             Assert.AreEqual(expected, actual.Result.ToString());
         }
         [Test]
         public void testgetBankAccountInfoAsync()
         {
-            //var actual = client.getOutstandingOrders();
-            //Console.WriteLine(actual);
+            Task<string> actual = client.getBankAccountInfoAsync();
+            Console.WriteLine(actual.Result.ToString());
+            string expected = "keysecrethttps://coincheck.com//api/bank_accountsGET";
+            Assert.AreEqual(expected, actual.Result.ToString());
         }
         [Test]
         public void testapplyBorrowingMoneyAsync()
