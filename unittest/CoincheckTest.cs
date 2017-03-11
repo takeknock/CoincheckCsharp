@@ -159,7 +159,10 @@ namespace unittest
         [Test]
         public void testgetAccountInfoAsync()
         {
-
+            Task<string> actual = client.getAccountInfoAsync();
+            Console.WriteLine(actual.Result.ToString());
+            string expected = "keysecrethttps://coincheck.com//api/accountsGET";
+            Assert.AreEqual(expected, actual.Result.ToString());
         }
         [Test]
         public void testgetSendHistoryAsync()
