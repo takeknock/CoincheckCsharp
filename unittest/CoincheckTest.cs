@@ -199,8 +199,10 @@ namespace unittest
         [Test]
         public void testgetBorrowInfoAsync()
         {
-            //var actual = client.getOutstandingOrders();
-            //Console.WriteLine(actual);
+            Task<string> actual = client.getBorrowInfoAsync();
+            Console.WriteLine(actual.Result.ToString());
+            string expected = "keysecrethttps://coincheck.com//api/lending/borrows/matchesGET";
+            Assert.AreEqual(expected, actual.Result.ToString());
         }
         [Test]
         public void testsendBitcoinAsync()
