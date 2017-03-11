@@ -103,8 +103,10 @@ namespace unittest
         [Test]
         public void testgetOutstandingOrdersAsync()
         {
-            //var actual = client.getOutstandingOrders();
-            //Console.WriteLine(actual);
+            Task<string> actual = client.getOutstandingOrdersAsync();
+            Console.WriteLine(actual.Result.ToString());
+            string expected = "keysecrethttps://coincheck.com//api/accounts/balanceGET";
+            Assert.AreEqual(expected, actual.Result.ToString());
         }
         [Test]
         public void testgetOwnTransactionPaginationAsync()
