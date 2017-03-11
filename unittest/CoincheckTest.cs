@@ -135,8 +135,10 @@ namespace unittest
         [Test]
         public void testcancelOrder()
         {
-            //var actual = client.getOutstandingOrders();
-            //Console.WriteLine(actual);
+            Task<string> actual = client.cancelOrder("14");
+            Console.WriteLine(actual.Result.ToString());
+            string expected = "keysecrethttps://coincheck.com//api/exchange/orders/14DELETE";
+            Assert.AreEqual(expected, actual.Result.ToString());
         }
         [Test]
         public void testcheckLeveragePositions()

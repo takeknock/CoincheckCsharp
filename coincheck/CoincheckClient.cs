@@ -192,7 +192,7 @@ namespace Coincheck
             return orders;
         }
 
-        async public Task<string> cancelOrder(string orderId)
+        async public Task<string> cancelOrderAsync(string orderId)
         {
             string pId = paths["orders"] + "/" + orderId;
             Uri pathId = new Uri(pId, UriKind.Relative);
