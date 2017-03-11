@@ -217,8 +217,15 @@ namespace unittest
         [Test]
         public void testregistBankAccountAsync()
         {
-            //var actual = client.getOutstandingOrders();
-            //Console.WriteLine(actual);
+            string bankName = "TestBank";
+            string bankBranch = "hoge";
+            string accountType = "futsu";
+            string accountNumber = "1234567";
+            string registedName = "Matthew";
+            Task<string> actual = client.registBankAccountAsync(bankName, bankBranch, accountType, accountNumber, registedName);
+            Console.WriteLine(actual.Result.ToString());
+            string expected = "keysecrethttps://coincheck.com//api/bank_accountsPOST";
+            Assert.AreEqual(expected, actual.Result.ToString());
         }
         [Test]
         public void testdeleteBankAccountAsync()
