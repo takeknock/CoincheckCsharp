@@ -127,8 +127,10 @@ namespace unittest
         [Test]
         public void testgetOpenordersAsync()
         {
-            //var actual = client.getOutstandingOrders();
-            //Console.WriteLine(actual);
+            Task<string> actual = client.getOpenordersAsync();
+            Console.WriteLine(actual.Result.ToString());
+            string expected = "keysecrethttps://coincheck.com//api/exchange/orders/opensGET";
+            Assert.AreEqual(expected, actual.Result.ToString());
         }
         [Test]
         public void testcancelOrder()
