@@ -273,8 +273,10 @@ namespace unittest
         [Test]
         public void testtransferToLeverageAsync()
         {
-            //var actual = client.getOutstandingOrders();
-            //Console.WriteLine(actual);
+            Task<string> actual = client.transferToLeverageAsync(10000);
+            Console.WriteLine(actual.Result.ToString());
+            string expected = "keysecrethttps://coincheck.com//api/exchange/transfers/to_leveragePOST";
+            Assert.AreEqual(expected, actual.Result.ToString());
         }
         [Test]
         public void testtransferFromLeverageAsync()
