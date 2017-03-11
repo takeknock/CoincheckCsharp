@@ -207,8 +207,12 @@ namespace unittest
         [Test]
         public void testsendBitcoinAsync()
         {
-            //var actual = client.getOutstandingOrders();
-            //Console.WriteLine(actual);
+            string address = "va8uoan3a:pvoa";
+            double amount = 1.0;
+            Task<string> actual = client.sendBitcoinAsync(address, amount);
+            Console.WriteLine(actual.Result.ToString());
+            string expected = "keysecrethttps://coincheck.com//api/send_moneyPOST";
+            Assert.AreEqual(expected, actual.Result.ToString());
         }
         [Test]
         public void testregistBankAccountAsync()
