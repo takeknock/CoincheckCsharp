@@ -151,8 +151,10 @@ namespace unittest
         [Test]
         public void testcheckLeverageBalance()
         {
-            //var actual = client.getOutstandingOrders();
-            //Console.WriteLine(actual);
+            Task<string> actual = client.checkLeverageBalanceAsync();
+            Console.WriteLine(actual.Result.ToString());
+            string expected = "keysecrethttps://coincheck.com//api/accounts/leverage_balanceGET";
+            Assert.AreEqual(expected, actual.Result.ToString());
         }
         [Test]
         public void testgetAccountInfo()
