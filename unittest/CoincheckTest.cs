@@ -149,7 +149,7 @@ namespace unittest
             Assert.AreEqual(expected, actual.Result.ToString());
         }
         [Test]
-        public void testcheckLeverageBalance()
+        public void testcheckLeverageBalanceAsync()
         {
             Task<string> actual = client.checkLeverageBalanceAsync();
             Console.WriteLine(actual.Result.ToString());
@@ -157,91 +157,90 @@ namespace unittest
             Assert.AreEqual(expected, actual.Result.ToString());
         }
         [Test]
-        public void testgetAccountInfo()
+        public void testgetAccountInfoAsync()
+        {
+
+        }
+        [Test]
+        public void testgetSendHistoryAsync()
         {
             //var actual = client.getOutstandingOrders();
             //Console.WriteLine(actual);
         }
         [Test]
-        public void testgetSendHistory()
+        public void testgetDepositHistoryAsync()
         {
             //var actual = client.getOutstandingOrders();
             //Console.WriteLine(actual);
         }
         [Test]
-        public void testgetDepositHistory()
+        public void testgetBankAccountInfoAsync()
         {
             //var actual = client.getOutstandingOrders();
             //Console.WriteLine(actual);
         }
         [Test]
-        public void testgetBankAccountInfo()
+        public void testapplyBorrowingMoneyAsync()
         {
             //var actual = client.getOutstandingOrders();
             //Console.WriteLine(actual);
         }
         [Test]
-        public void testapplyBorrowingMoney()
+        public void testgetBorrowInfoAsync()
         {
             //var actual = client.getOutstandingOrders();
             //Console.WriteLine(actual);
         }
         [Test]
-        public void testgetBorrowInfo()
+        public void testsendBitcoinAsync()
         {
             //var actual = client.getOutstandingOrders();
             //Console.WriteLine(actual);
         }
         [Test]
-        public void testsendBitcoin()
+        public void testregistBankAccountAsync()
         {
             //var actual = client.getOutstandingOrders();
             //Console.WriteLine(actual);
         }
         [Test]
-        public void testregistBankAccount()
+        public void testdeleteBankAccountAsync()
         {
             //var actual = client.getOutstandingOrders();
             //Console.WriteLine(actual);
         }
         [Test]
-        public void testdeleteBankAccount()
+        public void testgetWithdrawHistoryAsync()
         {
             //var actual = client.getOutstandingOrders();
             //Console.WriteLine(actual);
         }
         [Test]
-        public void testgetWithdrawHistory()
+        public void testwithdrawAsync()
         {
             //var actual = client.getOutstandingOrders();
             //Console.WriteLine(actual);
         }
         [Test]
-        public void testwithdraw()
+        public void testcancelWithdrawAsync()
         {
             //var actual = client.getOutstandingOrders();
             //Console.WriteLine(actual);
         }
         [Test]
-        public void testcancelWithdraw()
+        public void testrepayAsync()
         {
             //var actual = client.getOutstandingOrders();
             //Console.WriteLine(actual);
         }
         [Test]
-        public void testrepay()
+        public void testtransferToLeverageAsync()
         {
             //var actual = client.getOutstandingOrders();
             //Console.WriteLine(actual);
         }
         [Test]
-        public void testtransferToLeverage()
-        {
-            //var actual = client.getOutstandingOrders();
-            //Console.WriteLine(actual);
-        }
-        [Test]
-        public void testtransferFromLeverage()
+        public void testtransferFromLeverageAsync()
         {
             //var actual = client.getOutstandingOrders();
             //Console.WriteLine(actual);
