@@ -111,8 +111,10 @@ namespace unittest
         [Test]
         public void testgetOwnTransactionPaginationAsync()
         {
-            //var actual = client.getOutstandingOrders();
-            //Console.WriteLine(actual);
+            Task<string> actual = client.getOwnTransactionPaginationAsync();
+            Console.WriteLine(actual.Result.ToString());
+            string expected = "keysecrethttps://coincheck.com//api/exchange/orders/transactions_paginationGET";
+            Assert.AreEqual(expected, actual.Result.ToString());
         }
         [Test]
         public void testgetOwnTransactionAsync()
