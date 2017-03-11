@@ -1,2 +1,8 @@
+
 # CoincheckCsharp
-作成中
+
+This is the C# wrapper of coincheck API(https://coincheck.com/api).
+
+## Usage
+
+
