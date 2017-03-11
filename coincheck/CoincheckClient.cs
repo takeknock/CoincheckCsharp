@@ -202,7 +202,7 @@ namespace Coincheck
             return cancelOrder;
         }
 
-        async public Task<string> checkLeveragePositions()
+        async public Task<string> checkLeveragePositionsAsync()
         {
             Uri path = new Uri(paths["leveragePositions"], UriKind.Relative);
 
@@ -211,7 +211,7 @@ namespace Coincheck
             return checkResult;
         }
 
-        async public Task<string> checkLeverageBalance()
+        async public Task<string> checkLeverageBalanceAsync()
         {
             Uri path = new Uri(paths["leverageBalance"], UriKind.Relative);
             string checkResult = await sender.SendAsync(http, path, _key, _secret, "GET");
@@ -220,7 +220,7 @@ namespace Coincheck
 
         }
 
-        async public Task<string> getAccountInfo()
+        async public Task<string> getAccountInfoAsync()
         {
             Uri path = new Uri(paths["account"], UriKind.Relative);
             string info = await sender.SendAsync(http, path, _key, _secret, "GET");
@@ -245,7 +245,7 @@ namespace Coincheck
 
         //}
 
-        async public Task<string> getSendHistory(string currency = "BTC")
+        async public Task<string> getSendHistoryAsync(string currency = "BTC")
         {
             string param = "?currency=" + currency;
             Uri path = new Uri(paths["send"] + param, UriKind.Relative);
@@ -255,7 +255,7 @@ namespace Coincheck
             return sendHistory;
         }
 
-        async public Task<string> getDepositHistory(string currency = "btc_jpy")
+        async public Task<string> getDepositHistoryAsync(string currency = "btc_jpy")
         {
             string param = "?currency=" + currency;
             Uri path = new Uri(paths["deposit"] + param, UriKind.Relative);
@@ -264,7 +264,7 @@ namespace Coincheck
             return history;
         }
 
-        async public Task<string> getBankAccountInfo()
+        async public Task<string> getBankAccountInfoAsync()
         {
             Uri path = new Uri(paths["bankAccount"], UriKind.Relative);
             string info = await sender.SendAsync(http, path, _key, _secret, "GET");
@@ -272,7 +272,7 @@ namespace Coincheck
         }
         
 
-        async public Task<string> applyBorrowingMoney(double amount, string currency)
+        async public Task<string> applyBorrowingMoneyAsync(double amount, string currency)
         {
             Uri path = new Uri(paths["borrows"], UriKind.Relative);
             Dictionary<string, string> param = new Dictionary<string, string>()
@@ -284,7 +284,7 @@ namespace Coincheck
             return result;
         }
 
-        async public Task<string> getBorrowInfo()
+        async public Task<string> getBorrowInfoAsync()
         {
             Uri path = new Uri(paths["borrowInfo"], UriKind.Relative);
             string info = await sender.SendAsync(http, path, _key, _secret, "GET");
@@ -292,7 +292,7 @@ namespace Coincheck
         }
 
         // not tested
-        async public Task<string> sendBitcoin(string address, double amount)
+        async public Task<string> sendBitcoinAsync(string address, double amount)
         {
             Uri path = new Uri(paths["send"], UriKind.Relative);
             Dictionary<string, string> param = new Dictionary<string, string>()
@@ -304,7 +304,7 @@ namespace Coincheck
             return sendStatus;
         }
 
-        async public Task<string> registBankAccount(
+        async public Task<string> registBankAccountAsync(
             string bankName, string branchName, string accountType, string number, string resitedName)
         {
             Uri path = new Uri(paths["bankAccount"], UriKind.Relative);
@@ -320,14 +320,14 @@ namespace Coincheck
             return result;
         }
 
-        async public Task<string> deleteBankAccount(string id)
+        async public Task<string> deleteBankAccountAsync(string id)
         {
             Uri path = new Uri(paths["bankAccount"] + "/" + id, UriKind.Relative);
             string status = await sender.SendAsync(http, path, _key, _secret, "DELETE");
             return status;
         }
 
-        async public Task<string> getWithdrawHistory()
+        async public Task<string> getWithdrawHistoryAsync()
         {
             Uri path = new Uri(paths["withdraw"], UriKind.Relative);
             string history = await sender.SendAsync(http, path, _key, _secret, "GET");
@@ -335,7 +335,7 @@ namespace Coincheck
         }
 
         // error
-        async public Task<string> withdraw(string bankAccountId, double amount, string currency = "JPY", bool isFast = false)
+        async public Task<string> withdrawAsync(string bankAccountId, double amount, string currency = "JPY", bool isFast = false)
         {
             Uri path = new Uri(paths["withdraw"], UriKind.Relative);
             //Dictionary<string, string> param = new Dictionary<string, string>()
@@ -357,7 +357,7 @@ namespace Coincheck
 
         }
 
-        async public Task<string> cancelWithdraw(string withdrawId)
+        async public Task<string> cancelWithdrawAsync(string withdrawId)
         {
             Uri path = new Uri(paths["withdraw"] + "/" + withdrawId, UriKind.Relative);
             string status = await sender.SendAsync(http, path, _key, _secret, "DELETE");
@@ -376,7 +376,7 @@ namespace Coincheck
         }
 
         // error
-        async public Task<string> transferToLeverage(double amount, string currency = "JPY")
+        async public Task<string> transferToLeverageAsync(double amount, string currency = "JPY")
         {
             Uri path = new Uri(paths["toLeverage"], UriKind.Relative);
             Dictionary<string, string> param = new Dictionary<string, string>()
@@ -389,7 +389,7 @@ namespace Coincheck
         }
 
         // error Bad Request
-        async public Task<string> transferFromLeverage(double amount, string currency = "JPY")
+        async public Task<string> transferFromLeverageAsync(double amount, string currency = "JPY")
         {
             Uri path = new Uri(paths["fromLeverage"], UriKind.Relative);
             Dictionary<string, string> param = new Dictionary<string, string>()
