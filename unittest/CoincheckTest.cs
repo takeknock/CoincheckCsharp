@@ -175,8 +175,10 @@ namespace unittest
         [Test]
         public void testgetDepositHistoryAsync()
         {
-            //var actual = client.getOutstandingOrders();
-            //Console.WriteLine(actual);
+            Task<string> actual = client.getDepositHistoryAsync();
+            Console.WriteLine(actual.Result.ToString());
+            string expected = "";
+            Assert.AreEqual(expected, actual.Result.ToString());
         }
         [Test]
         public void testgetBankAccountInfoAsync()
