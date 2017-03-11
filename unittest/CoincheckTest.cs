@@ -133,9 +133,9 @@ namespace unittest
             Assert.AreEqual(expected, actual.Result.ToString());
         }
         [Test]
-        public void testcancelOrder()
+        public void testcancelOrderAsync()
         {
-            Task<string> actual = client.cancelOrder("14");
+            Task<string> actual = client.cancelOrderAsync("14");
             Console.WriteLine(actual.Result.ToString());
             string expected = "keysecrethttps://coincheck.com//api/exchange/orders/14DELETE";
             Assert.AreEqual(expected, actual.Result.ToString());
