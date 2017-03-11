@@ -230,8 +230,11 @@ namespace unittest
         [Test]
         public void testdeleteBankAccountAsync()
         {
-            //var actual = client.getOutstandingOrders();
-            //Console.WriteLine(actual);
+            string id = "12";
+            Task<string> actual = client.deleteBankAccountAsync(id);
+            Console.WriteLine(actual.Result.ToString());
+            string expected = "keysecrethttps://coincheck.com//api/bank_accounts/12DELETE";
+            Assert.AreEqual(expected, actual.Result.ToString());
         }
         [Test]
         public void testgetWithdrawHistoryAsync()
