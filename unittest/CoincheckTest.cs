@@ -141,10 +141,12 @@ namespace unittest
             Assert.AreEqual(expected, actual.Result.ToString());
         }
         [Test]
-        public void testcheckLeveragePositions()
+        public void testcheckLeveragePositionsAsync()
         {
-            //var actual = client.getOutstandingOrders();
-            //Console.WriteLine(actual);
+            Task<string> actual = client.checkLeveragePositionsAsync();
+            Console.WriteLine(actual.Result.ToString());
+            string expected = "keysecrethttps://coincheck.com//api/exchange/leverage/positionsGET";
+            Assert.AreEqual(expected, actual.Result.ToString());
         }
         [Test]
         public void testcheckLeverageBalance()
