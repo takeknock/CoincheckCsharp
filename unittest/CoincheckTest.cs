@@ -256,8 +256,10 @@ namespace unittest
         [Test]
         public void testcancelWithdrawAsync()
         {
-            //var actual = client.getOutstandingOrders();
-            //Console.WriteLine(actual);
+            string withdrawId = "1431";
+            Task<string> actual = client.cancelWithdrawAsync(withdrawId);
+            string expected = "keysecrethttps://coincheck.com//api/withdraws/1431DELETE";
+            Assert.AreEqual(expected, actual.Result.ToString());
         }
         [Test]
         public void testrepayAsync()
