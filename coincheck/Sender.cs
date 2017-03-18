@@ -11,43 +11,43 @@ namespace Coincheck
     public class Sender : ISender
     {
 
-        public async Task<string> SendAsync(HttpClient http, Uri path, string apiKey, string secret, string method, Dictionary<string, string> parameters = null)
+        public async Task<string> SendAsync(HttpClient http, Uri path, string apiKey, string secret, Util.IHttpMethod method)
         {
-            if (parameters == null)
-                parameters = new Dictionary<string, string>();
+            //if (parameters == null)
+            //    parameters = new Dictionary<string, string>();
 
-            var content = new FormUrlEncodedContent(parameters);
-            string param = await content.ReadAsStringAsync();
+            //var content = new FormUrlEncodedContent(parameters);
+            //string param = await content.ReadAsStringAsync();
 
-            UnixTime unixtime = new UnixTime();
-            string nonce = unixtime.ToString();
+            //UnixTime unixtime = new UnixTime();
+            //string nonce = unixtime.ToString();
 
-            Uri uri = new Uri(http.BaseAddress, path);
-            string message = makeMessage(nonce, uri.ToString(), param);
-            string sign = generateSignature(secret, message);
-            setHttpHeaders(ref http, apiKey, nonce, sign);
+            //Uri uri = new Uri(http.BaseAddress, path);
+            //string message = makeMessage(nonce, uri.ToString(), param);
+            //string sign = generateSignature(secret, message);
+            //setHttpHeaders(ref http, apiKey, nonce, sign);
 
-            HttpResponseMessage responce;
+            string response = await method.sendAsync(http, path);
+            return response;
+            //switch (method)
+            //{
+            //    case "POST":
+            //        responce = await http.PostAsync(path, content);
+            //        break;
+            //    case "GET":
+            //        responce = await http.GetAsync(path);
+            //        break;
+            //    case "DELETE":
+            //        responce = await http.DeleteAsync(path);
+            //        break;
+            //    default:
+            //        throw new ArgumentException("You should choose POST, GET or DELETE as a method.", method);
+            //}
+            //responce.EnsureSuccessStatusCode();
 
-            switch (method)
-            {
-                case "POST":
-                    responce = await http.PostAsync(path, content);
-                    break;
-                case "GET":
-                    responce = await http.GetAsync(path);
-                    break;
-                case "DELETE":
-                    responce = await http.DeleteAsync(path);
-                    break;
-                default:
-                    throw new ArgumentException("You should choose POST, GET or DELETE as a method.", method);
-            }
-            responce.EnsureSuccessStatusCode();
+            //string text = await responce.Content.ReadAsStringAsync();
 
-            string text = await responce.Content.ReadAsStringAsync();
-
-            return text;
+            //return text;
         }
 
         private string makeMessage(string nonce, string uri, string param)
