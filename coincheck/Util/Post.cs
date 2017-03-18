@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http;
 
-namespace coincheck.Util
+namespace Coincheck.Util
 {
     class POST : IHttpMethod
     {
@@ -14,6 +14,7 @@ namespace coincheck.Util
         {
             content = new FormUrlEncodedContent(parameters);
         }
+
         public async Task<string> sendAsync(HttpClient http, Uri uri)
         {
             HttpResponseMessage response = await http.PostAsync(uri, content);

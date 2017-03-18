@@ -5,13 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http;
 
-namespace coincheck.Util
+namespace Coincheck.Util
 {
     class DELETE : IHttpMethod
     {
         public async Task<string> sendAsync(HttpClient http, Uri path)
         {
-            return "hoget";
+            HttpResponseMessage response = await http.DeleteAsync(path);
+            response.EnsureSuccessStatusCode();
+            string returnedText = await response.Content.ReadAsStringAsync();
+            return returnedText;
         }
     }
 }

@@ -5,13 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http;
 
-namespace coincheck.Util
+namespace Coincheck.Util
 {
     class GET : IHttpMethod
     {
         public async Task<string> sendAsync(HttpClient http, Uri path)
         {
-            return "fuga";
+            HttpResponseMessage response = await http.GetAsync(path);
+            response.EnsureSuccessStatusCode();
+            string returnedText = await response.Content.ReadAsStringAsync();
+            return returnedText;
         }
     }
 }
