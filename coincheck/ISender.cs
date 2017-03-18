@@ -9,6 +9,6 @@ namespace Coincheck
 {
     public interface ISender
     {
-        Task<string> SendAsync(HttpClient http, Uri path, string apiKey, string secret, string method, Dictionary<string, string> parameters = null);
+        Task<string> SendAsync(HttpClient http, Uri path, string apiKey, string secret, Util.IHttpMethod method);
     }
 }

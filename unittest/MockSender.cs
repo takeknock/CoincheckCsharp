@@ -16,16 +16,16 @@ namespace unittest
         public string _method;
         public Dictionary<string, string> _param = new Dictionary<string, string>();
 
-        public async Task<string> SendAsync(HttpClient http, Uri path, string apiKey, string secret, string method, Dictionary<string, string> parameters = null)
+        public async Task<string> SendAsync(HttpClient http, Uri path, string apiKey, string secret, Coincheck.Util.IHttpMethod method)
         {
             clear();
             this._key = apiKey;
             this._secret = secret;
             this._http = http;
-            this._method = method;
-            this._param = parameters;
+            //this._method = method;
+            //this._param = parameters;
             //string paramStr = _param.Select(e => e.Key.Concat(e.Value));
-            return _key + _secret + _http.BaseAddress.ToString() + path.ToString() + method;
+            return _key + _secret + _http.BaseAddress.ToString() + path.ToString() + method.GetType().Name;
         }
 
         private void clear()

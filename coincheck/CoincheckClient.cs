@@ -12,15 +12,18 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using Newtonsoft.Json;
-
+using Coincheck.Util;
 
 namespace Coincheck
 { 
     public class CoincheckClient
     {
         private ISender sender = new Sender();
-        private HttpClient http = new HttpClient();
+        //private HttpClient http = new HttpClient();
         private List<string> _gettablePair = new List<string>() { "btc_jpy", "eth_jpy", "etc_jpy", "dao_jpy", "lsk_jpy", "fct_jpy", "xmr_jpy", "rep_jpy", "xrp_jpy", "zec_jpy", "eth_btc", "etc_btc", "lsk_btc", "fct_btc", "xmr_btc", "rep_btc", "xrp_btc", "zec_btc" };
+
+        private string baseAddress = "https://coincheck.com";
+        private HttpMethodBuilder httpMethodBuilder = new HttpMethodBuilder();
 
         private Dictionary<string, string> paths = new Dictionary<string, string>
         {
@@ -52,12 +55,12 @@ namespace Coincheck
 
         public CoincheckClient()
         {
-            http.BaseAddress = new Uri("https://coincheck.com");
+            //http.BaseAddress = new Uri("https://coincheck.com");
         }
 
         public CoincheckClient(ISender argSender)
         {
-            http.BaseAddress = new Uri("https://coincheck.com");
+            //http.BaseAddress = new Uri("https://coincheck.com");
             sender = argSender;
         }
 
@@ -65,7 +68,7 @@ namespace Coincheck
         {
             _key = key;
             _secret = secret;
-            http.BaseAddress = new Uri("https://coincheck.com");
+            //http.BaseAddress = new Uri("https://coincheck.com");
         }
 
         public CoincheckClient(string key, string secret, ISender argSender)
@@ -73,14 +76,18 @@ namespace Coincheck
             _key = key;
             _secret = secret;
             sender = argSender;
-            http.BaseAddress = new Uri("https://coincheck.com");
+            //http.BaseAddress = new Uri("https://coincheck.com");
         }
 
 
         async public Task<string> getTickerAsync()
         {
             Uri path = new Uri(paths["ticker"], UriKind.Relative);
-            string response = await sender.SendAsync(http, path, _key, _secret, "GET");
+
+            HttpClient http = await createHttp(path, null);
+
+            IHttpMethod method = httpMethodBuilder.createGET();
+            string response = await sender.SendAsync(http, path, _key, _secret, method);
             
             return response;
         }       
@@ -88,14 +95,22 @@ namespace Coincheck
         async public Task<string> getTradesAsync()
         {
             Uri path = new Uri(paths["trades"], UriKind.Relative);
-            string response = await sender.SendAsync(http, path, _key, _secret, "GET");
+            HttpClient http = await createHttp(path, null);
+
+            IHttpMethod method = httpMethodBuilder.createGET();
+            string response = await sender.SendAsync(http, path, _key, _secret, method);
             return response;
         }
 
         async public Task<string> getOrderbookAsync()
         {
             Uri path = new Uri(paths["orderbook"], UriKind.Relative);
-            string response = await sender.SendAsync(http, path, _key, _secret, "GET");
+
+            HttpClient http = await createHttp(path, null);
+
+            IHttpMethod method = httpMethodBuilder.createGET();
+
+            string response = await sender.SendAsync(http, path, _key, _secret, method);
 
             return response;
         }
@@ -117,7 +132,12 @@ namespace Coincheck
                     {"order_type", order },
                     {"pair", pair }
                 };
-            string response = await sender.SendAsync(http, path, _key, _secret, "GET", parameters);
+
+            HttpClient http = await createHttp(path, null);
+
+            IHttpMethod method = httpMethodBuilder.createGET();
+
+            string response = await sender.SendAsync(http, path, _key, _secret, method);
 
             return response;
         }
@@ -132,7 +152,11 @@ namespace Coincheck
             string fxRateTarget = paths["fxRates"] + pair;
             Uri path = new Uri(fxRateTarget, UriKind.Relative);
 
-            string response = await sender.SendAsync(http, path, _key, _secret, "GET");
+            HttpClient http = await createHttp(path, null);
+
+            IHttpMethod method = httpMethodBuilder.createGET();
+
+            string response = await sender.SendAsync(http, path, _key, _secret, method);
 
             return response;
         }
@@ -151,15 +175,22 @@ namespace Coincheck
                 {"rate", rate.ToString() },
                 {"amount", amount.ToString() }
             };
-            string result = await sender.SendAsync(http, path,_key, _secret, "POST", param);
+            HttpClient http = await createHttp(path, param);
+
+            IHttpMethod method = httpMethodBuilder.createPOST(param);
+
+            string result = await sender.SendAsync(http, path,_key, _secret, method);
             return result;
         }
 
         async public Task<string> getOutstandingOrdersAsync()
         {   
             Uri path = new Uri(paths["assets"], UriKind.Relative);
+            HttpClient http = await createHttp(path, null);
 
-            string text = await sender.SendAsync(http, path, _key, _secret, "GET");
+            IHttpMethod method = httpMethodBuilder.createGET();
+
+            string text = await sender.SendAsync(http, path, _key, _secret, method);
 
             return text;
         }
@@ -167,8 +198,9 @@ namespace Coincheck
         async public Task<string> getOwnTransactionPaginationAsync()
         {
             Uri path = new Uri(paths["pagination"], UriKind.Relative);
+            HttpClient http = await createHttp(path, null);
 
-            string method = "GET";
+            IHttpMethod method = httpMethodBuilder.createGET();
 
             string json = await sender.SendAsync(http, path, _key, _secret, method);
             return json;
@@ -178,7 +210,9 @@ namespace Coincheck
         async public Task<string> getOwnTransactionAsync()
         {
             Uri path = new Uri(paths["transactions"], UriKind.Relative);
-            string method = "GET";
+            HttpClient http = await createHttp(path, null);
+
+            IHttpMethod method = httpMethodBuilder.createGET();
 
             string json = await sender.SendAsync(http, path, _key, _secret, method);
             return json;
@@ -187,7 +221,11 @@ namespace Coincheck
         async public Task<string> getOpenordersAsync()
         {
             Uri path = new Uri(paths["openorders"], UriKind.Relative);
-            string orders = await sender.SendAsync(http, path, _key, _secret, "GET");
+            HttpClient http = await createHttp(path, null);
+
+            IHttpMethod method = httpMethodBuilder.createGET();
+
+            string orders = await sender.SendAsync(http, path, _key, _secret, method);
 
             return orders;
         }
@@ -195,9 +233,12 @@ namespace Coincheck
         async public Task<string> cancelOrderAsync(string orderId)
         {
             string pId = paths["orders"] + "/" + orderId;
-            Uri pathId = new Uri(pId, UriKind.Relative);
+            Uri path = new Uri(pId, UriKind.Relative);
+            HttpClient http = await createHttp(path, null);
 
-            string cancelOrder = await sender.SendAsync(http, pathId, _key, _secret, "DELETE");
+            IHttpMethod method = httpMethodBuilder.createDELETE();
+
+            string cancelOrder = await sender.SendAsync(http, path, _key, _secret, method);
 
             return cancelOrder;
         }
@@ -205,8 +246,11 @@ namespace Coincheck
         async public Task<string> checkLeveragePositionsAsync()
         {
             Uri path = new Uri(paths["leveragePositions"], UriKind.Relative);
+            HttpClient http = await createHttp(path, null);
 
-            string checkResult = await sender.SendAsync(http, path, _key, _secret, "GET");
+            IHttpMethod method = httpMethodBuilder.createGET();
+
+            string checkResult = await sender.SendAsync(http, path, _key, _secret, method);
 
             return checkResult;
         }
@@ -214,7 +258,11 @@ namespace Coincheck
         async public Task<string> checkLeverageBalanceAsync()
         {
             Uri path = new Uri(paths["leverageBalance"], UriKind.Relative);
-            string checkResult = await sender.SendAsync(http, path, _key, _secret, "GET");
+            IHttpMethod method = httpMethodBuilder.createGET();
+            HttpClient http = await createHttp(path, null);
+
+
+            string checkResult = await sender.SendAsync(http, path, _key, _secret, method);
 
             return checkResult;
 
@@ -223,7 +271,11 @@ namespace Coincheck
         async public Task<string> getAccountInfoAsync()
         {
             Uri path = new Uri(paths["account"], UriKind.Relative);
-            string info = await sender.SendAsync(http, path, _key, _secret, "GET");
+            HttpClient http = await createHttp(path, null);
+
+            IHttpMethod method = httpMethodBuilder.createGET();
+
+            string info = await sender.SendAsync(http, path, _key, _secret, method);
             return info;
         }
 
@@ -249,9 +301,12 @@ namespace Coincheck
         {
             string param = "?currency=" + currency;
             Uri path = new Uri(paths["send"] + param, UriKind.Relative);
+            HttpClient http = await createHttp(path, null);
+
+            IHttpMethod method = httpMethodBuilder.createGET();
 
             string sendHistory =
-                await sender.SendAsync(http, path, _key, _secret, "GET");
+                await sender.SendAsync(http, path, _key, _secret, method);
             return sendHistory;
         }
 
@@ -259,15 +314,22 @@ namespace Coincheck
         {
             string param = "?currency=" + currency;
             Uri path = new Uri(paths["deposit"] + param, UriKind.Relative);
+            HttpClient http = await createHttp(path, null);
 
-            string history = await sender.SendAsync(http, path, _key, _secret, "GET");
+            IHttpMethod method = httpMethodBuilder.createGET();
+
+            string history = await sender.SendAsync(http, path, _key, _secret, method);
             return history;
         }
 
         async public Task<string> getBankAccountInfoAsync()
         {
             Uri path = new Uri(paths["bankAccount"], UriKind.Relative);
-            string info = await sender.SendAsync(http, path, _key, _secret, "GET");
+            HttpClient http = await createHttp(path, null);
+
+            IHttpMethod method = httpMethodBuilder.createGET();
+
+            string info = await sender.SendAsync(http, path, _key, _secret, method);
             return info;
         }
         
@@ -280,14 +342,22 @@ namespace Coincheck
                 {"amount", amount.ToString() },
                 {"currency", currency }
             };
-            string result = await sender.SendAsync(http, path, _key, _secret, "POST", param);
+            HttpClient http = await createHttp(path, param);
+
+            IHttpMethod method = httpMethodBuilder.createPOST(param);
+
+            string result = await sender.SendAsync(http, path, _key, _secret, method);
             return result;
         }
 
         async public Task<string> getBorrowInfoAsync()
         {
             Uri path = new Uri(paths["borrowInfo"], UriKind.Relative);
-            string info = await sender.SendAsync(http, path, _key, _secret, "GET");
+            HttpClient http = await createHttp(path, null);
+
+            IHttpMethod method = httpMethodBuilder.createGET();
+
+            string info = await sender.SendAsync(http, path, _key, _secret, method);
             return info;
         }
 
@@ -300,7 +370,11 @@ namespace Coincheck
                 {"address", address },
                 {"amount", amount.ToString() }
             };
-            string sendStatus = await sender.SendAsync(http, path, _key, _secret, "POST", param);
+            HttpClient http = await createHttp(path, param);
+
+            IHttpMethod method = httpMethodBuilder.createPOST(param);
+
+            string sendStatus = await sender.SendAsync(http, path, _key, _secret, method);
             return sendStatus;
         }
 
@@ -316,21 +390,33 @@ namespace Coincheck
                 {"number", number },
                 {"name", resitedName }
             };
-            string result = await sender.SendAsync(http, path, _key, _secret, "POST", param);
+            HttpClient http = await createHttp(path, null);
+
+            IHttpMethod method = httpMethodBuilder.createPOST(param);
+
+            string result = await sender.SendAsync(http, path, _key, _secret, method);
             return result;
         }
 
         async public Task<string> deleteBankAccountAsync(string id)
         {
             Uri path = new Uri(paths["bankAccount"] + "/" + id, UriKind.Relative);
-            string status = await sender.SendAsync(http, path, _key, _secret, "DELETE");
+            HttpClient http = await createHttp(path, null);
+
+            IHttpMethod method = httpMethodBuilder.createDELETE();
+
+            string status = await sender.SendAsync(http, path, _key, _secret, method);
             return status;
         }
 
         async public Task<string> getWithdrawHistoryAsync()
         {
             Uri path = new Uri(paths["withdraw"], UriKind.Relative);
-            string history = await sender.SendAsync(http, path, _key, _secret, "GET");
+            HttpClient http = await createHttp(path, null);
+
+            IHttpMethod method = httpMethodBuilder.createGET();
+
+            string history = await sender.SendAsync(http, path, _key, _secret, method);
             return history;
         }
 
@@ -351,8 +437,11 @@ namespace Coincheck
                 {"amount", amount.ToString() },
                 {"currency", currency }
             };
+            HttpClient http = await createHttp(path, param);
 
-            string status = await sender.SendAsync(http, path, _key, _secret, "POST", param);
+            IHttpMethod method = httpMethodBuilder.createPOST(param);
+
+            string status = await sender.SendAsync(http, path, _key, _secret, method);
             return status;
 
         }
@@ -360,7 +449,11 @@ namespace Coincheck
         async public Task<string> cancelWithdrawAsync(string withdrawId)
         {
             Uri path = new Uri(paths["withdraw"] + "/" + withdrawId, UriKind.Relative);
-            string status = await sender.SendAsync(http, path, _key, _secret, "DELETE");
+            HttpClient http = await createHttp(path, null);
+
+            IHttpMethod method = httpMethodBuilder.createDELETE();
+
+            string status = await sender.SendAsync(http, path, _key, _secret, method);
             return status;
         }
 
@@ -371,7 +464,11 @@ namespace Coincheck
             //{
             //    {"id", borrowingId }
             //};
-            string result = await sender.SendAsync(http, path, _key, _secret, "POST");
+            HttpClient http = await createHttp(path, null);
+
+            IHttpMethod method = httpMethodBuilder.createPOST(null);
+
+            string result = await sender.SendAsync(http, path, _key, _secret, method);
             return result;
         }
 
@@ -384,7 +481,11 @@ namespace Coincheck
                 {"currency", currency },
                 {"amount", amount.ToString()}
             };
-            string status = await sender.SendAsync(http, path, _key, _secret, "POST", param);
+            HttpClient http = await createHttp(path, null);
+
+            IHttpMethod method = httpMethodBuilder.createPOST(param);
+
+            string status = await sender.SendAsync(http, path, _key, _secret, method);
             return status;
         }
 
@@ -397,9 +498,57 @@ namespace Coincheck
                 {"currency", currency },
                 {"amount", amount.ToString()}
             };
-            string status = await sender.SendAsync(http, path, _key, _secret, "POST", param);
+
+            HttpClient http = await createHttp(path, param);
+
+            IHttpMethod method = httpMethodBuilder.createPOST(param);
+
+            string status = await sender.SendAsync(http, path, _key, _secret, method);
             return status;
 
+        }
+
+        private async Task<HttpClient> createHttp(Uri path, Dictionary<string, string> parameters)
+        {
+            HttpClient http = new HttpClient();
+            http.BaseAddress = new Uri(baseAddress);
+
+            if (parameters == null)
+            {
+                parameters = new Dictionary<string, string>();
+            }
+            var content = new FormUrlEncodedContent(parameters);
+            string param = await content.ReadAsStringAsync();
+
+            UnixTime unixtime = new UnixTime();
+            string nonce = unixtime.ToString();
+
+            Uri uri = new Uri(http.BaseAddress, path);
+            string message = makeMessage(nonce, uri.ToString(), param);
+            string sign = generateSignature(_secret, message);
+            setHttpHeaders(ref http, _key, nonce, sign);
+            return http;
+        }
+
+        private string makeMessage(string nonce, string uri, string param)
+        {
+            return nonce + uri + param;
+        }
+
+        private string generateSignature(string secret, string message)
+        {
+            byte[] hash = new HMACSHA256(Encoding.UTF8.GetBytes(secret)).ComputeHash(Encoding.UTF8.GetBytes(message));
+            string signature = BitConverter.ToString(hash).ToLower().Replace("-", "");
+            return signature;
+        }
+
+        private void setHttpHeaders(ref HttpClient http,
+            string apiKey, string nonce, string sign)
+        {
+            http.DefaultRequestHeaders.Clear();
+            http.DefaultRequestHeaders.Add("ACCESS-KEY", apiKey);
+            http.DefaultRequestHeaders.Add("ACCESS-NONCE", nonce);
+            http.DefaultRequestHeaders.Add("ACCESS-SIGNATURE", sign);
         }
 
 

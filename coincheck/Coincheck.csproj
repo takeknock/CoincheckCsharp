@@ -65,10 +65,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sender.cs" />
     <Compile Include="UnixTime.cs" />
+    <Compile Include="Util\DELETE.cs" />
+    <Compile Include="Util\GET.cs" />
+    <Compile Include="Util\HttpMethodBuilder.cs" />
+    <Compile Include="Util\IHttpMethod.cs" />
+    <Compile Include="Util\POST.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Impl\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
