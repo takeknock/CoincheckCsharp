@@ -405,6 +405,49 @@ namespace Coincheck
 
         }
 
+        private async Task<HttpClient> createHttp(Uri path, Dictionary<string, string> parameters)
+        {
+            HttpClient http = new HttpClient();
+            http.BaseAddress = new Uri(baseAddress);
+
+            if (parameters == null)
+            {
+                parameters = new Dictionary<string, string>();
+            }
+            var content = new FormUrlEncodedContent(parameters);
+            string param = await content.ReadAsStringAsync();
+
+            UnixTime unixtime = new UnixTime();
+            string nonce = unixtime.ToString();
+
+            Uri uri = new Uri(http.BaseAddress, path);
+            string message = makeMessage(nonce, uri.ToString(), param);
+            string sign = generateSignature(_secret, message);
+            setHttpHeaders(ref http, _key, nonce, sign);
+            return http;
+        }
+
+        private string makeMessage(string nonce, string uri, string param)
+        {
+            return nonce + uri + param;
+        }
+
+        private string generateSignature(string secret, string message)
+        {
+            byte[] hash = new HMACSHA256(Encoding.UTF8.GetBytes(secret)).ComputeHash(Encoding.UTF8.GetBytes(message));
+            string signature = BitConverter.ToString(hash).ToLower().Replace("-", "");
+            return signature;
+        }
+
+        private void setHttpHeaders(ref HttpClient http,
+            string apiKey, string nonce, string sign)
+        {
+            http.DefaultRequestHeaders.Clear();
+            http.DefaultRequestHeaders.Add("ACCESS-KEY", apiKey);
+            http.DefaultRequestHeaders.Add("ACCESS-NONCE", nonce);
+            http.DefaultRequestHeaders.Add("ACCESS-SIGNATURE", sign);
+        }
+
 
     }
 }
