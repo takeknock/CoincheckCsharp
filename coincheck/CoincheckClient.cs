@@ -12,15 +12,18 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using Newtonsoft.Json;
-
+using Coincheck.Util;
 
 namespace Coincheck
 { 
     public class CoincheckClient
     {
         private ISender sender = new Sender();
-        private HttpClient http = new HttpClient();
+        //private HttpClient http = new HttpClient();
         private List<string> _gettablePair = new List<string>() { "btc_jpy", "eth_jpy", "etc_jpy", "dao_jpy", "lsk_jpy", "fct_jpy", "xmr_jpy", "rep_jpy", "xrp_jpy", "zec_jpy", "eth_btc", "etc_btc", "lsk_btc", "fct_btc", "xmr_btc", "rep_btc", "xrp_btc", "zec_btc" };
+
+        private string baseAddress = "https://coincheck.com";
+        private HttpMethodBuilder httpMethodBuilder = new HttpMethodBuilder();
 
         private Dictionary<string, string> paths = new Dictionary<string, string>
         {
@@ -52,12 +55,12 @@ namespace Coincheck
 
         public CoincheckClient()
         {
-            http.BaseAddress = new Uri("https://coincheck.com");
+            //http.BaseAddress = new Uri("https://coincheck.com");
         }
 
         public CoincheckClient(ISender argSender)
         {
-            http.BaseAddress = new Uri("https://coincheck.com");
+            //http.BaseAddress = new Uri("https://coincheck.com");
             sender = argSender;
         }
 
@@ -65,7 +68,7 @@ namespace Coincheck
         {
             _key = key;
             _secret = secret;
-            http.BaseAddress = new Uri("https://coincheck.com");
+            //http.BaseAddress = new Uri("https://coincheck.com");
         }
 
         public CoincheckClient(string key, string secret, ISender argSender)
@@ -73,7 +76,7 @@ namespace Coincheck
             _key = key;
             _secret = secret;
             sender = argSender;
-            http.BaseAddress = new Uri("https://coincheck.com");
+            //http.BaseAddress = new Uri("https://coincheck.com");
         }
 
 
