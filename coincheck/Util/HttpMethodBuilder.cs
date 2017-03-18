@@ -10,6 +10,8 @@ namespace Coincheck.Util
     {
         internal POST createPOST(Dictionary<string, string> parameters)
         {
+            if (parameters == null)
+                parameters = new Dictionary<string, string>();
             return new POST(parameters);
         }
 

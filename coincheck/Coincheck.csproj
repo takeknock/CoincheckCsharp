@@ -67,6 +67,7 @@
     <Compile Include="UnixTime.cs" />
     <Compile Include="Util\DELETE.cs" />
     <Compile Include="Util\GET.cs" />
+    <Compile Include="Util\HttpMethodBuilder.cs" />
     <Compile Include="Util\IHttpMethod.cs" />
     <Compile Include="Util\POST.cs" />
   </ItemGroup>
