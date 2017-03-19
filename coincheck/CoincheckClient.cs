@@ -3,15 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Net;
-using System.IO;
-using System.Runtime.Serialization.Json;
-using System.Web;
-using System.Collections.Specialized;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Security.Cryptography;
-using Newtonsoft.Json;
 using Coincheck.Util;
 
 namespace Coincheck
